@@ -2,7 +2,7 @@
 
 # Team / Personas
 Grace: April Ludgate (Parks & Rec)  
-Scott:   
+Scott: Old Fashion Guy (The State)
 Klace: Charlie Kelly (IASIP)  
 Dominique:   
 
