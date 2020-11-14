@@ -2,9 +2,9 @@
 
 # Team / Personas
 Grace: April Ludgate (Parks & Rec)  
-Scott:   
+Scott: Henry Pollard (Party Down)
 Klace: Charlie Kelly (IASIP)  
-Dominique:   
+Dominique: TBD
 
 ## Project Description
 An App that searches, by character name, a number of movie, television, game and literary APIs and returns all appearances of that character.
