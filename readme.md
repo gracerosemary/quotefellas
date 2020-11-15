@@ -4,7 +4,7 @@
 Grace: April Ludgate (Parks & Rec)  
 Scott: Old Fashion Guy (The State)
 Klace: Charlie Kelly (IASIP)  
-Dominique:   
+Dominique: TBD
 
 ## Project Description
 An App that searches, by character name, a number of movie, television, game and literary APIs and returns all appearances of that character.
