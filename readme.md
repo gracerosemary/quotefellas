@@ -31,3 +31,6 @@ Minimum Viable Product (MVP) definition
 - Games DB: https://www.igdb.com/api   
 - Books/Literature DB: https://developers.google.com/books   
 - Entertainment (Movies/Games/TV): https://rapidapi.com/IVALLC/api/entertainment-data-hub   
+
+
+![wrrc](readme-assets/wrrc.jpg)
