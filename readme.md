@@ -32,4 +32,4 @@ Minimum Viable Product (MVP) definition
 
 
 ![domain](./readme-assets/domain.jpg)
-![Entity Relationship Diagram](./readme-assets/ERD.jpg)  
+![Entity Relationship Diagram](./readme-assets/ERD.jpeg)  
