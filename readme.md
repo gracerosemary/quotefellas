@@ -1,37 +1,35 @@
-# Who Are You
+# Final Project 
 
-# Team / Personas
-Grace: April Ludgate (Parks & Rec)  
-Scott: Old Fashion Guy (The State)
-Klace: Charlie Kelly (IASIP)  
-Dominique: TBD
+# Team 
+Grace, Scott, Klace, Dominique
 
 ## Project Description
-An App that searches, by character name, a number of movie, television, game and literary APIs and returns all appearances of that character.
+An App that provides users a way to remember moments from their favorite TV show or movie by quizzing their knowledge of memorable quotes. 
 
 Minimum Viable Product (MVP) definition
-- Take in a name
-- Call APIs
-- Return every instance of the search
+- Homepage where user enters name
+- Call APIs for quotes
+- Return every instance of quote
 - Display to front end
-- Writing to a DB
+- Display multiple choice answers
+- Save quote to db 
+- Update/Delete feature on saved quote
+- Save user's name and score to db
 - Style to aesthetically please
 
 ### Features: 
-- Note taking feature   
-- Time stamped  
-- Save character search and results to DB  
-- Cheshire Cat theme  
+- Notes (update feature on saved quote)
+- Score keeping
+- Theme TBD
 
-### Possible APIs
-- Movie/Shows DB: http://www.omdbapi.com/  
-- Movie Quotes: https://rapidapi.com/blog/how-to-use-imdb-api/   
-- TV: https://thetvdb.com/api-information   
-- Comic DB: https://superheroapi.com/  
-- Games DB: https://www.igdb.com/api   
-- Books/Literature DB: https://developers.google.com/books   
-- Entertainment (Movies/Games/TV): https://rapidapi.com/IVALLC/api/entertainment-data-hub   
-
+### APIs
+[The Office Quotes](https://www.officeapi.dev/)  
+[Breaking Bad Quotes](https://public-apis.xyz/breaking-bad-quotes-7116)  
+[Kanye Quotes](https://kanye.rest/)  
+[Always Sunny Quotes](http://www.sunnyquotes.net/api/)  
+[Ron Swanson Quotes](https://ron-swanson-quotes.herokuapp.com/v2/quotes)  
+[The Simpson Quotes](https://thesimpsonsquoteapi.glitch.me/)  
 
 
 ![domain](./readme-assets/domain.jpg)
+![Entity Relationship Diagram](./readme-assets/ERD.jpg)  
