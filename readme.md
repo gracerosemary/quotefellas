@@ -33,4 +33,5 @@ Minimum Viable Product (MVP) definition
 - Entertainment (Movies/Games/TV): https://rapidapi.com/IVALLC/api/entertainment-data-hub   
 
 
-![wrrc](readme-assets/wrrc.jpg)
+
+![domain](./readme-assets/domain.jpg)
