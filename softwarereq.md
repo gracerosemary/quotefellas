@@ -1,53 +1,43 @@
 ## SOFTWARE REQUIREMENTS
 
 **Vision:**  
-The vision for this product is to give the user easy, concise information, about specific characters in media. This addresses a pain point of keeping track of characters in a single TV show, video game, movie, or book.  
-
-This product ultimately helps answer a question we’ve all asked;  
-**“Who was that person from the thing with that guy in it?”**
+The vision of this app is to provide users a way to remember moments from their favorite TV show or movie by quizzing their knowledge of memorable quotes. 
 
 ## SCOPE  
 **In Scope**:  
-The app will provide a single search bar to quickly search a name across major media platforms - TV, movies, video games, comics, and books.
-The app will allow users to save selected characters and write their own note.
-Users will be able to add and remove saved characters and edit their notes as they see fit.
+- This app will provide the user with a simple 10 question quiz where they are asked to correctly guess who said that quote. 
+- Users will be given multiple choices for the quiz.
+- Users can save their favorite quotes, as well as remove them.
 
 **Out of Scope**:  
-This app will not give you detailed information about characters or their stories
-Users won’t be protected from possible spoilers.
+This app will not give users the option to pick which specific films/movies they are quizzed on.
 
-**MVP:**  
-- Take in a name
-- Call APIs
-- Return every instance of the search
-- Display to front end
-- Writing to a DB
+## MVP:  
+- Pick a topic / theme (ex. Tv show) with radio buttons
+- Call APIs to generate quotes 
+- Display quotes to the user in the form of a quiz
+- Have a save quote feature that saves a quote to a Saved page (DB)
+- Allow the user to write any notes on the Save page (note-taking feature)
+- Provide a score to the user and display the score on the High Score page
 - Style to aesthetically please
 
+
 **Stretch Goal:**  
-1. Give users the ability to create their own files for their saved items.
-2. Give users a photo stream of iterations of that character.
-3. Do some fancy styling probably. 
+1. Give users a photo stream of characters
+2. Do some fancy styling probably. 
 
-**Functional Requirements:**  
-- Users can search, save, and delete a character reference.
-- Users can quickly see bullet information of a character reference.
+## Functional Requirements:
+- Users are given a quote from one of various APIs
+- Users can guess multiple choice who said it.
+- Users can save their favorite quotes.
 
-**Data Flow:**  
-	“T-800 was in all the Terminator films”  
-	“No they weren’t.”  
-	“Look it up on that cheshire cat web app that uses multiple APIs - Who Are You”  
-	*types in “T-800”  
-	“See - T-800 was only in Terminator, Judgement Day, Rise of….oh yes they were in all the Terminator films - I concede my argument.”  
-	“I’m happy with this outcome and use of this web app”  
-
-
-- A user will make a search request by typing in the characters name into the search bar. 
-- That request will be sent out to the APIs we're using to search for a reference to that character's name across multiple storylines/multiverse.
-- The app will return a list of appearances of the characters
-- Users will then be able to add notes and save that character information for later reference.
-- Users can delete saved character data when that character dies or they don’t care anymore.
-
-**Non-Functional Requirements:**  
+## Non-Functional Requirements:
 Mobile Responsive: this app will need to be functional and viewable on many device sizes.
 Accessibility: This had will be accessible and use alt-text.
+
+## Data Flow:
+- Users will hit a landing page, where they can chose to take a quiz, or view saved quotes.
+- Upon selecting to take the quiz, they'll be given a series of 10 quotes and asked to correctly guess the character name that said the quote. 
+- Quotes will be pulled from a number of APIs and displayed to the user at a random order.
+- Users will select their choice and will be given their final result at the end of their quiz.
+- Users can save their favorite quotes and those quotes will be saved in a database.
