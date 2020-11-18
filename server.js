@@ -21,11 +21,12 @@ app.set('view engine', 'ejs');
 const client = new pg.Client(process.env.DATABASE_URL);
 
 app.get('/office', officeAPI);
+app.get('/swanson', swansonAPI);
 
 
 
 
-
+//----------- Office API and Constructor
 function officeAPI(req, res){
   console.log('thats what she said');
   const URL = `https://officeapi.dev/api/quotes/random`;
@@ -42,8 +43,22 @@ function Office(obj){
   let name = `${obj.character.firstname} ${obj.character.lastname}`;
   this.quoter = name;
 }
-
-
+//------------ Ron Swanson API and Constructor
+function swansonAPI(req, res){
+  console.log('no');
+  const URL = `https://ron-swanson-quotes.herokuapp.com/v2/quotes`;
+  superagent.get(URL)
+    .then(data => {
+      let quote = new Swanson(data.body[0]);
+      console.log(quote);
+      res.status(200).send(quote);
+    })
+    .catch(error => console.log(error));
+}
+function Swanson(quote){
+  this.quote = quote;
+  this.quoter = 'Ron Swanson';
+}
 
 
 // turn the server on
