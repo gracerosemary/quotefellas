@@ -27,11 +27,11 @@ app.get('/sunny', sunnyQuotes);
 app.get('/office', officeAPI);
 app.get('/swanson', swansonAPI);
 app.get('/kanye', kanyeAPI);
-
+app.get('/breakingbad', breakingBadAPI);
+app.get('/simpsons', simpsonQuotes);
 
 function sunnyQuotes (req, res){
   let API = 'http://sunnyquotes.net/q.php?random';
-
   superagent.get(API).then( data => {
     let newSunny = new Sunny(data.body);
     // res.status(200).send(newSunny);
@@ -44,9 +44,29 @@ function Sunny(newSunnyQuote){
   this.quote = newSunnyQuote.sqQuote;
   this.quoter = newSunnyQuote.sqWho;
 }
+
+// return an object with a quote and an author from breaking bad and kanye
+// Breaking Bad
+
+function breakingBadAPI(req, res){
+  const URL = `https://breaking-bad-quotes.herokuapp.com/v1/quotes`;
+  superagent.get(URL)
+  .then(data => {
+    let quote = new BadQuote(data.body[0]);
+    res.status(200).send(quote);
+    console.log(data);
+  })
+  .catch(error => console.log(error));
+}
+
+function BadQuote(quote){
+  this.quote = quote;
+  this.quoter = 'Breaking Bad';
+}
+
+
 // ----------------------------------------
-// Simpson Route
-app.get('/simpsons', simpsonQuotes);
+
 function simpsonQuotes (req, res){
   let API = 'https://thesimpsonsquoteapi.glitch.me/quotes';
 
