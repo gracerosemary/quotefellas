@@ -28,3 +28,19 @@ client.connect().then(()=> {
   console.log(error);
 });
 
+// return an object with a quote and an author from breaking bad and kanye
+// Breaking Bad
+app.get('/breakingbad', breakingBadAPI);
+function breakingBadAPI(req, res){
+  const URL = `https://breaking-bad-quotes.herokuapp.com/v1/quotes`;
+  superagent.get(URL)
+  .then(data => {
+    let quote = new BadQuote(data.body[0]);
+    res.status(200).send(quote);
+    console.log(data);
+  })
+  .catch(error => console.log(error));
+}
+
+function BadQuote(quote){
+}
