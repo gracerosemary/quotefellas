@@ -43,4 +43,6 @@ function breakingBadAPI(req, res){
 }
 
 function BadQuote(quote){
+  this.quote = quote;
+  this.quoter = 'Breaking Bad';
 }
