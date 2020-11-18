@@ -67,7 +67,7 @@ function kanyeAPI(req, res){
     .then(data =>{
       let quote = new Kanye(data.body.quote);
       console.log(quote);
-      res.status(200).send();
+      res.status(200).send(quote);
     })
     .catch(error => console.log(error));
 }
