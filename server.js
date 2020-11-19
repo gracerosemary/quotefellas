@@ -143,3 +143,88 @@ client.connect()
   .catch (error => {
     console.log(error);
   });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // DATABASE STUFF -----------------------------------------------------------|
+
+  // Route to saved quotes
+  app.get('/saved', savedQuote);
+  function savedQuote(request, response) {
+    const SQL = 'SELECT * FROM user;';
+
+    return client.query(SQL)
+    .then(results => {
+      response.status(200).render('view/saved') // need to enter returning object
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
+
+  // Route to saved score
+  app.get('/scores', savedQuote);
+  function savedScores(request, response) {
+    const SQL = 'SELECT * FROM quotes;';
+
+    return client.query(SQL)
+    .then(results => {
+      response.status(200).render('view/scores') // need to enter returning object
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
+
+  // Need to add update/delete
