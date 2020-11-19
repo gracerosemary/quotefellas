@@ -21,15 +21,21 @@ app.set('view engine', 'ejs');
 const client = new pg.Client(process.env.DATABASE_URL);
 
 
-// Sunny Route
+//Routes
+app.get('/', homePage);
 app.get('/sunny', sunnyQuotes);
-
+app.get('/breakingbad', breakingBadAPI);
 app.get('/office', officeAPI);
 app.get('/swanson', swansonAPI);
 app.get('/kanye', kanyeAPI);
-app.get('/breakingbad', breakingBadAPI);
-app.get('/simpsons', simpsonQuotes);
+// app.get('/simpsons', simpsonQuotes);
 
+//---------------------------------Home Page
+function homePage(req, res){
+  res.status(200).send('homepage');
+}
+
+//------------------------------ Always Sunny API
 function sunnyQuotes (req, res){
   let API = 'http://sunnyquotes.net/q.php?random';
   superagent.get(API).then( data => {
@@ -39,51 +45,20 @@ function sunnyQuotes (req, res){
   });
   // .catch(error => console.log(error));
 }
-// Sunny Constructor
-function Sunny(newSunnyQuote){
-  this.quote = newSunnyQuote.sqQuote;
-  this.quoter = newSunnyQuote.sqWho;
-}
 
-// return an object with a quote and an author from breaking bad and kanye
-// Breaking Bad
-
+//----------------------------- Breaking Bad API
 function breakingBadAPI(req, res){
   const URL = `https://breaking-bad-quotes.herokuapp.com/v1/quotes`;
   superagent.get(URL)
-  .then(data => {
-    let quote = new BadQuote(data.body[0]);
-    res.status(200).send(quote);
-    console.log(data);
-  })
-  .catch(error => console.log(error));
+    .then(data => {
+      let quote = new BadQuote(data.body[0]);
+      res.status(200).send(quote);
+      console.log(quote);
+    })
+    .catch(error => console.log(error));
 }
 
-function BadQuote(quote){
-  this.quote = quote;
-  this.quoter = 'Breaking Bad';
-}
-
-
-// ----------------------------------------
-
-function simpsonQuotes (req, res){
-  let API = 'https://thesimpsonsquoteapi.glitch.me/quotes';
-
-  superagent.get(API).then(data => {
-    console.log(data.body);
-    let newSimpson = new Simpson(data.body);
-    console.log(newSimpson);
-  });
-}
-// Simpson Constructor
-function Simpson(newSimpsonQuote){
-  this.quote = newSimpsonQuote.quote;
-  this.quoter= newSimpsonQuote.character;
-  // currently throws UnhandledPromiseRejectionWarning - probably just needs catch block
-}
-
-//----------- Office API and Constructor
+//----------------------------- Office API
 function officeAPI(req, res){
   // console.log('thats what she said');
   const URL = `https://officeapi.dev/api/quotes/random`;
@@ -95,12 +70,8 @@ function officeAPI(req, res){
     })
     .catch(error => console.log(error));
 }
-function Office(obj){
-  this.quote = obj.content;
-  let name = `${obj.character.firstname} ${obj.character.lastname}`;
-  this.quoter = name;
-}
-//------------ Ron Swanson API and Constructor
+
+//--------------------------- Ron Swanson API
 function swansonAPI(req, res){
   // console.log('no');
   const URL = `https://ron-swanson-quotes.herokuapp.com/v2/quotes`;
@@ -112,11 +83,8 @@ function swansonAPI(req, res){
     })
     .catch(error => console.log(error));
 }
-function Swanson(quote){
-  this.quote = quote;
-  this.quoter = 'Ron Swanson';
-}
-//------------ Kanye API and Constructor
+
+//------------------------------- Kanye API
 function kanyeAPI(req, res){
   console.log('Aquaman was here');
   const URL = `https://api.kanye.rest`;
@@ -127,6 +95,36 @@ function kanyeAPI(req, res){
       res.status(200).send(quote);
     })
     .catch(error => console.log(error));
+}
+
+//--------------------------------- Simpsons API
+// function simpsonQuotes (req, res){
+//   let API = 'https://thesimpsonsquoteapi.glitch.me/quotes';
+
+//   superagent.get(API).then(data => {
+//     console.log(data.body);
+//     let newSimpson = new Simpson(data.body);
+//     console.log(newSimpson);
+//   });
+// }
+
+//------------------------------- Constructors
+function Sunny(newSunnyQuote){
+  this.quote = newSunnyQuote.sqQuote;
+  this.quoter = newSunnyQuote.sqWho;
+}
+function BadQuote(quote){
+  this.quote = quote.quote;
+  this.quoter = quote.author;
+}
+function Office(obj){
+  this.quote = obj.content;
+  let name = `${obj.character.firstname} ${obj.character.lastname}`;
+  this.quoter = name;
+}
+function Swanson(quote){
+  this.quote = quote;
+  this.quoter = 'Ron Swanson';
 }
 function Kanye(quote){
   this.quote = quote;
