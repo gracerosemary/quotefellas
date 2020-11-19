@@ -20,7 +20,6 @@ app.set('view engine', 'ejs');
 //database set up
 const client = new pg.Client(process.env.DATABASE_URL);
 
-
 //Routes
 app.get('/', homePage);
 app.get('/sunny', sunnyQuotes);
@@ -29,10 +28,19 @@ app.get('/office', officeAPI);
 app.get('/swanson', swansonAPI);
 app.get('/kanye', kanyeAPI);
 // app.get('/simpsons', simpsonQuotes);
+app.get('/scores', savedScores);
+app.post('/scores', addScores);
+app.get('/saved', savedQuote);
+app.post('/saved', addQuote);
+app.get('/about', about);
 
 //---------------------------------Home Page
 function homePage(req, res){
-  res.status(200).send('homepage');
+  res.status(200).render('index');
+}
+//-------------------------------- About
+function about(req, res){
+  res.status(200).render('about');
 }
 
 //------------------------------ Always Sunny API
@@ -40,10 +48,10 @@ function sunnyQuotes (req, res){
   let API = 'http://sunnyquotes.net/q.php?random';
   superagent.get(API).then( data => {
     let newSunny = new Sunny(data.body);
-    // res.status(200).send(newSunny);
+    res.status(200).send(newSunny);
     console.log(newSunny);
-  });
-  // .catch(error => console.log(error));
+  })
+    .catch(error => console.log(error));
 }
 
 //----------------------------- Breaking Bad API
@@ -131,6 +139,61 @@ function Kanye(quote){
   this.quoter = 'Kanye West';
 }
 
+// DATABASE STUFF ----------------------------------------------------------
+
+//--------------------------------- Add Quote
+function addQuote(request, response) {
+  const SQL = 'INSERT INTO quotes (quotes, note) VALUES ($1, $2) RETURNING id';
+  const params = [request.body.quotes, request.body.note];
+  client.query(SQL, params)
+    .then(results => {
+      response.status(200).redirect(`view/saved`); // need to add object.id
+    })
+    .catch(error => {
+      console.log(error);
+    });
+}
+
+//--------------------------------- Save Quote
+function savedQuote(request, response) {
+  const SQL = 'SELECT * FROM quotes;';
+
+  return client.query(SQL)
+    .then(results => {
+      response.status(200).render('saved', {}); // need to enter returning object
+    })
+    .catch(error => {
+      console.log(error);
+    });
+}
+//--------------------------------- Add Scores
+function addScores(request, response) {
+  const SQL = 'INSERT INTO users (firstName, score_number) VALUES ($1, $2) RETURNING id';
+  const params = [request.body.firstName, request.body.score_number];
+  client.query(SQL, params)
+    .then(results => {
+      response.status(200).redirect(`views/scores`); // need to add object
+    })
+    .catch(error => {
+      console.log(error);
+    });
+}
+
+//------------------------------ Saved Scores
+function savedScores(request, response) {
+  const SQL = 'SELECT * FROM users;';
+
+  return client.query(SQL)
+    .then(results => {
+      response.status(200).render('scores', {}); // need to enter returning object
+    })
+    .catch(error => {
+      console.log(error);
+    });
+}
+
+// Need to add update/delete - G will do on Thursday (need to figure out empty column for note with update feature)
+
 // turn the server on
 client.connect()
   .then(()=> {
@@ -141,88 +204,3 @@ client.connect()
   .catch (error => {
     console.log(error);
   });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // DATABASE STUFF -----------------------------------------------------------|
-
-  // Route to saved quotes
-  app.get('/saved', savedQuote);
-  function savedQuote(request, response) {
-    const SQL = 'SELECT * FROM user;';
-
-    return client.query(SQL)
-    .then(results => {
-      response.status(200).render('view/saved') // need to enter returning object
-    })
-    .catch(error => {
-      console.log(error);
-    });
-  }
-
-  // Route to saved score
-  app.get('/scores', savedQuote);
-  function savedScores(request, response) {
-    const SQL = 'SELECT * FROM quotes;';
-
-    return client.query(SQL)
-    .then(results => {
-      response.status(200).render('view/scores') // need to enter returning object
-    })
-    .catch(error => {
-      console.log(error);
-    });
-  }
-
-  // Need to add update/delete

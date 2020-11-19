@@ -2,7 +2,7 @@ DROP TABLE if exists users;
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    firstname VARCHAR(255),
+    firstName VARCHAR(255),
     score_number INT
 );
 

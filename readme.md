@@ -34,3 +34,9 @@ Minimum Viable Product (MVP) definition
 ![domain](./readme-assets/domain.jpg)
 ![Entity Relationship Diagram](./readme-assets/ERD.jpeg)  
 ![wireframe](./readme-assets/wireframe.jpg)
+
+## Change Log
+*11/18/2020*
++ Added a `postgresql` data base
++ Built out the basic structure of the `*.ejs` files
++ Got the APIs and constructors functioning and returning our quote object
