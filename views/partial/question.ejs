@@ -1,23 +1,27 @@
 <section id="questions">
   <!-- insert data from object for quote, and options A - D -->
-  <p>quote goes here</p>
-  <div>
-    <form action="/answer" method="POST">
-      <label for="A">o p tion A
-        <input type="radio" name="answer" value="A" required>
-      </label>
-      <label for="B">opti on B
-        <input type="radio" name="answer" value="B" required>
-      </label>
-      <label for="C">op ti o n C
-        <input type="radio" name="answer" value="C" required>
-      </label>
-      <label for="D">op tion D
-        <input type="radio" name="answer" value="D" required>
-      </label>
-      <button type="submit">Submit</button>
+  <form action=“/quiz” method=“POST”>
+    <% fakeObj.forEach(quote => { %>
+      <p class="quote"><%=quote.quote%></p>
     </form>
-  </div>
+    <div>
+      <form id="<%=quote.id%>" action="/answer" method="POST">
+        <label for="A"> <%=quote.optionA%>
+          <input type="radio" name="answer" value="A" required>
+        </label>
+        <label for="B"> <%=quote.optionB%>
+          <input type="radio" name="answer" value="B" required>
+        </label>
+        <label for="C"> <%=quote.optionC%>
+          <input type="radio" name="answer" value="C" required>
+        </label>
+        <label for="D"> <%=quote.optionD%>
+          <input type="radio" name="answer" value="D" required>
+        </label>
+        <button type="submit" formaction="/fake/<%=quote.id%>">Submit</button>
+      </form>
+    </div>
+    <% }) %>
   <!-- do method override to make PUT -->
   <form action="/save" method="POST">
     <!-- insert data from object to be saved -->
