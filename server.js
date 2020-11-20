@@ -20,19 +20,33 @@ app.set('view engine', 'ejs');
 //database set up
 const client = new pg.Client(process.env.DATABASE_URL);
 
-
-//Routes
+// ---------------------------------Routes
 app.get('/', homePage);
+app.get('/scores', savedScores);
+app.post('/scores', addScores);
+app.get('/saved', savedQuote);
+app.post('/save', addQuote);
+app.get('/about', about);
+app.post('/quiz', startQuiz);
+
 app.get('/sunny', sunnyQuotes);
 app.get('/breakingbad', breakingBadAPI);
 app.get('/office', officeAPI);
 app.get('/swanson', swansonAPI);
 app.get('/kanye', kanyeAPI);
-// app.get('/simpsons', simpsonQuotes);
 
 //---------------------------------Home Page
 function homePage(req, res){
-  res.status(200).send('homepage');
+  res.status(200).render('index');
+}
+//-------------------------------- About
+function about(req, res){
+  res.status(200).render('about');
+}
+// -------------------------------- Start Quiz
+function startQuiz(req, res){
+  // render object returned from quizBuilder
+  res.status(200).render('quiz');
 }
 
 //------------------------------ Always Sunny API
@@ -40,10 +54,9 @@ function sunnyQuotes (req, res){
   let API = 'http://sunnyquotes.net/q.php?random';
   superagent.get(API).then( data => {
     let newSunny = new Sunny(data.body);
-    // res.status(200).send(newSunny);
-    console.log(newSunny);
-  });
-  // .catch(error => console.log(error));
+    res.status(200).send(newSunny);
+  })
+    .catch(error => console.log(error));
 }
 
 //----------------------------- Breaking Bad API
@@ -53,19 +66,16 @@ function breakingBadAPI(req, res){
     .then(data => {
       let quote = new BadQuote(data.body[0]);
       res.status(200).send(quote);
-      console.log(quote);
     })
     .catch(error => console.log(error));
 }
 
 //----------------------------- Office API
 function officeAPI(req, res){
-  // console.log('thats what she said');
   const URL = `https://officeapi.dev/api/quotes/random`;
   superagent.get(URL)
     .then(data => {
       let quote = new Office((JSON.parse(data.text)).data);
-      // console.log(quote);
       res.status(200).send(quote);
     })
     .catch(error => console.log(error));
@@ -73,12 +83,10 @@ function officeAPI(req, res){
 
 //--------------------------- Ron Swanson API
 function swansonAPI(req, res){
-  // console.log('no');
   const URL = `https://ron-swanson-quotes.herokuapp.com/v2/quotes`;
   superagent.get(URL)
     .then(data => {
       let quote = new Swanson(data.body[0]);
-      // console.log(quote);
       res.status(200).send(quote);
     })
     .catch(error => console.log(error));
@@ -86,12 +94,10 @@ function swansonAPI(req, res){
 
 //------------------------------- Kanye API
 function kanyeAPI(req, res){
-  console.log('Aquaman was here');
   const URL = `https://api.kanye.rest`;
   superagent.get(URL)
     .then(data =>{
       let quote = new Kanye(data.body.quote);
-      console.log(quote);
       res.status(200).send(quote);
     })
     .catch(error => console.log(error));
@@ -131,6 +137,61 @@ function Kanye(quote){
   this.quoter = 'Kanye West';
 }
 
+// DATABASE STUFF ----------------------------------------------------------
+
+//--------------------------------- Add Quote
+function addQuote(request, response) {
+  const SQL = 'INSERT INTO quotes (quotes, note) VALUES ($1, $2) RETURNING id';
+  const params = [request.body.quotes, request.body.note];
+  client.query(SQL, params)
+    .then(results => {
+      response.status(200).redirect(`view/saved`); // need to add object.id
+    })
+    .catch(error => {
+      console.log(error);
+    });
+}
+
+//--------------------------------- Saved Quote
+function savedQuote(request, response) {
+  const SQL = 'SELECT * FROM quotes;';
+
+  return client.query(SQL)
+    .then(results => {
+      response.status(200).render('saved', {}); // need to enter returning object
+    })
+    .catch(error => {
+      console.log(error);
+    });
+}
+//--------------------------------- Add Scores
+function addScores(request, response) {
+  const SQL = 'INSERT INTO users (firstName, score_number) VALUES ($1, $2) RETURNING id';
+  const params = [request.body.firstName, request.body.score_number];
+  client.query(SQL, params)
+    .then(results => {
+      response.status(200).redirect(`views/scores`); // need to add object
+    })
+    .catch(error => {
+      console.log(error);
+    });
+}
+
+//------------------------------ Saved Scores
+function savedScores(request, response) {
+  const SQL = 'SELECT * FROM users;';
+
+  return client.query(SQL)
+    .then(results => {
+      response.status(200).render('scores', {}); // need to enter returning object
+    })
+    .catch(error => {
+      console.log(error);
+    });
+}
+
+// Need to add update/delete - G will do on Thursday (need to figure out empty column for note with update feature)
+
 // turn the server on
 client.connect()
   .then(()=> {
@@ -141,88 +202,3 @@ client.connect()
   .catch (error => {
     console.log(error);
   });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // DATABASE STUFF -----------------------------------------------------------|
-
-  // Route to saved quotes
-  app.get('/saved', savedQuote);
-  function savedQuote(request, response) {
-    const SQL = 'SELECT * FROM user;';
-
-    return client.query(SQL)
-    .then(results => {
-      response.status(200).render('view/saved') // need to enter returning object
-    })
-    .catch(error => {
-      console.log(error);
-    });
-  }
-
-  // Route to saved score
-  app.get('/scores', savedQuote);
-  function savedScores(request, response) {
-    const SQL = 'SELECT * FROM quotes;';
-
-    return client.query(SQL)
-    .then(results => {
-      response.status(200).render('view/scores') // need to enter returning object
-    })
-    .catch(error => {
-      console.log(error);
-    });
-  }
-
-  // Need to add update/delete

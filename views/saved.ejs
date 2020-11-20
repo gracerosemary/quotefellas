@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include( './layout/head.ejs' ) %>
+  <link rel="stylesheet" href="./styles/modules/quotes.css">
+</head>
+<body>
+  <div id="grid-container">
+  <header>
+    <%- include( './layout/header.ejs' ) %>
+  </header>
+  <main>
+    <h2>Saved Quotes</h2>
+    <%- include('./partial/quote.ejs') %>
+  </main>
+
+  <footer>
+    <%- include( './layout/footer.ejs' ) %>
+  </footer>
+  </div>
+</body>
+</html>

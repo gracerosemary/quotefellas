@@ -1,0 +1,30 @@
+#saved-quotes>p:first-child {
+  width: 100%;
+  max-width: 600px;
+  padding: 15px;
+  background: #fff;
+  margin: 20px auto;
+  border-radius: 20px;
+}
+
+#saved-quotes>p:nth-child(2) {
+  width: 50%;
+  max-width: 350px;
+  padding: 10px;
+  background: #fff;
+  margin: 20px auto;
+  border-radius: 20px;
+}
+
+#saved-quotes>p:last-child {
+  width: 90%;
+  max-width: 600px;
+  padding: 15px;
+  background: rgb(206, 206, 206);
+  margin: 20px auto;
+  border-radius: 20px;
+}
+
+img {
+  height: 200px;
+}

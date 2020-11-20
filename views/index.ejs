@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include( './layout/head.ejs' ) %>
+  <link rel="stylesheet" href="./styles/modules/homepage.css">
+</head>
+
+<body>
+  <div id="grid-container">
+    <header>
+      <%- include( './layout/header.ejs' ) %>
+    </header>
+    <main>
+      <h2>Welcome to our thing</h2>
+      <p>Enter your name to start the quiz</p>
+      <form action="/quiz" method="POST">
+        <div id="input">
+        <input type="text" name="player" placeholder="enter name">
+        </div>
+        <div id="button">
+        <button type="submit">Start the Quiz</button>
+        </div>
+      </form>
+    </main>
+    <footer>
+      <%- include( './layout/footer.ejs' ) %>
+    </footer>
+  </div>
+</body>
+
+</html>

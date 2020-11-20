@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include( './layout/head.ejs' ) %>
+  <link rel="stylesheet" href="./styles/modules/questions.css">
+</head>
+
+<body>
+  <div id="grid-container">
+    <header>
+      <%- include( './layout/header.ejs' ) %>
+    </header>
+    <main>
+      <div>
+        <h2>Player Name</h2>
+        <p>score: 1</p>
+      </div>
+      <!-- moved the code here to the question partial -->
+      <%- include('./partial/question.ejs') %>
+    </main>
+
+    <footer>
+      <%- include( './layout/footer.ejs' ) %>
+    </footer>
+  </div>
+</body>
+
+</html>

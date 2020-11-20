@@ -1,0 +1,29 @@
+<section id="questions">
+  <!-- insert data from object for quote, and options A - D -->
+  <p>quote goes here</p>
+  <div>
+    <form action="/answer" method="POST">
+      <label for="A">o p tion A
+        <input type="radio" name="answer" value="A" required>
+      </label>
+      <label for="B">opti on B
+        <input type="radio" name="answer" value="B" required>
+      </label>
+      <label for="C">op ti o n C
+        <input type="radio" name="answer" value="C" required>
+      </label>
+      <label for="D">op tion D
+        <input type="radio" name="answer" value="D" required>
+      </label>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+  <!-- do method override to make PUT -->
+  <form action="/save" method="POST">
+    <!-- insert data from object to be saved -->
+    <input name="quote" value="" class="hidden-input">
+    <input name="quoter" value="" class="hidden-input">
+    <input name="photo" value="" class="hidden-input">
+    <button type="submit" id="save">save quote</button>
+  </form>
+</section>

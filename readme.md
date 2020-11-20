@@ -1,7 +1,10 @@
 # Final Project 
 
 # Team 
-Grace, Scott, Klace, Dominique
++ Grace Choi
++ Klace Koch
++ Dominique Augurson
++ Scott Falbo
 
 ## Project Description
 An App that provides users a way to remember moments from their favorite TV show or movie by quizzing their knowledge of memorable quotes. 
@@ -34,3 +37,9 @@ Minimum Viable Product (MVP) definition
 ![domain](./readme-assets/domain.jpg)
 ![Entity Relationship Diagram](./readme-assets/ERD.jpeg)  
 ![wireframe](./readme-assets/wireframe.jpg)
+
+## Change Log
+*11/18/2020*
++ Added a `postgresql` data base
++ Built out the basic structure of the `*.ejs` files
++ Got the APIs and constructors functioning and returning our quote object
