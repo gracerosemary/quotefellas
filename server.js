@@ -104,6 +104,7 @@ function answerCheck(req, res){
   if(questionID > 4){
     addScores(req, res);
   }else{
+    console.log(questionID)
     res.status(200).render('quiz', {
       quote: quiz[questionID],
       player: req.body.player,
@@ -165,7 +166,7 @@ function kanyeAPI(req, res){
     .catch(error => console.log(error));
 }
 
-//--------------------------------- Simpsons API
+//--------------------------------- Simpsons API (Stretch Goal)
 // function simpsonQuotes (req, res){
 //   let API = 'https://thesimpsonsquoteapi.glitch.me/quotes';
 
@@ -308,38 +309,6 @@ client.connect()
     console.log(error);
   });
 
-
-
-
-// FAKE DATA - FOR TESTING ONLY
-
-// app.get('/fake', (req, res) => {
-//   let fakeObj =
-//     [
-//       {
-//         'id': '1',
-//         'quote':'Wang is all over my ass because of rent.',
-//         'quoter':'Charlie Kelly',
-//         'optionA': 'Mac',
-//         'optionB': 'Dee',
-//         'optionC': 'Frank',
-//         'optionD': 'Charlie',
-//         'image': 'image_path.com'
-//       },
-//     ];
-//   res.status(200).render('quiz', {fakeObj});
-// });
-
-// {
-//   id: question number,
-//   quote: 'quote',
-//   quoter: 'quoter',
-//   optionA: name1,
-//   optionB: name2,
-//   optionC: name3,
-//   optionD: name4,
-//   image: image_path
-//   }
 
 
 

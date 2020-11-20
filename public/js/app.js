@@ -1,12 +1,16 @@
-'use strict';
+"use strict";
 
-$(function(){
-  $('#dropdown').click(event =>{
+$(function () {
+  $("#dropdown").click((event) => {
     console.log(event.target);
-    $('#menu').slideToggle(500);
+    $("#menu").slideToggle(500);
   });
 });
 
+function changeButton() {
+  const btn = document.getElementById("submitButton");
+  btn.innerHTML = 'Next Question';
+}
 
 
 
@@ -14,7 +18,7 @@ $(function(){
 
 
 // SCORE CALCULATION NOTES: Last Update 8:58pm 11/19
-// totals score at the end of the quiz. Answers are selected by the player, then transferred to DB as a string. when the scoreTotal is 
+// totals score at the end of the quiz. Answers are selected by the player, then transferred to DB as a string. when the scoreTotal is
 // initiated the answers in the DB (array of objects, string value), are then compared to the answers stored from the api call.
 
 // EXAMPLE:
@@ -29,7 +33,6 @@ $(function(){
 // }
 
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 // OBJ:
 // 1-global variables for the DB objects, Score Total then acknowledges those objects,
@@ -65,11 +68,10 @@ $(function(){
 // function compareData {
 // 	correctA = [];
 // 	playerAnswers.foreach(function (CALCULATE SOMETHING) {
-// 		if (n = 
+// 		if (n =
 
 // NEED Function to (TBD)
 
 // function correctA (arr) => {
-	
 
 // function scoreTotal = () => {

@@ -1,29 +1,36 @@
 <section id="questions">
   <!-- insert data from object for quote, and options A - D -->
-    <p><%=quote.quote%></p>
-    <div>
-      <form action="/quiz/<%=quote.id%>" method="POST">
-        <label for="A"> <%=quote.optionA%>
-          <input type="radio" name="answer" value="<%=quote.optionA%>" required>
-        </label>
-        <label for="B"> <%=quote.optionB%>
-          <input type="radio" name="answer" value="<%=quote.optionB%>" required>
-        </label>
-        <label for="C"> <%=quote.optionC%>
-          <input type="radio" name="answer" value="<%=quote.optionC%>" required>
-        </label>
-        <label for="D"> <%=quote.optionD%>
-          <input type="radio" name="answer" value="<%=quote.optionD%>" required>
-        </label>
-        <button type="submit">Submit</button>
-      </form>
-    </div>
+  <p><%=quote.quote%></p>
+  <div>
+    <script src="../../js/app.js"></script>
+    <form action="/quiz/<%=quote.id%>" method="POST">
+      <label for="A">
+        <%=quote.optionA%>
+        <input type="radio" name="answer" value="<%=quote.optionA%>" required />
+      </label>
+      <label for="B">
+        <%=quote.optionB%>
+        <input type="radio" name="answer" value="<%=quote.optionB%>" required />
+      </label>
+      <label for="C">
+        <%=quote.optionC%>
+        <input type="radio" name="answer" value="<%=quote.optionC%>" required />
+      </label>
+      <label for="D">
+        <%=quote.optionD%>
+        <input type="radio" name="answer" value="<%=quote.optionD%>" required />
+      </label>
+      <button type="submit" onclick="changeButton()" id="submitButton">
+        Submit
+      </button>
+    </form>
+  </div>
   <!-- do method override to make PUT -->
   <form action="/save" method="POST">
     <!-- insert data from object to be saved -->
-    <input name="quote" value="" class="hidden-input">
-    <input name="quoter" value="" class="hidden-input">
-    <input name="photo" value="" class="hidden-input">
+    <input name="quote" value="" class="hidden-input" />
+    <input name="quoter" value="" class="hidden-input" />
+    <input name="photo" value="" class="hidden-input" />
     <button type="submit" id="save">save quote</button>
   </form>
 </section>
