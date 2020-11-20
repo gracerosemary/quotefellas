@@ -28,12 +28,7 @@ app.get('/saved', savedQuote);
 app.post('/save', addQuote);
 app.get('/about', about);
 app.post('/quiz', startQuiz);
-
-app.get('/sunny', sunnyQuotes);
-app.get('/breakingbad', breakingBadAPI);
-app.get('/office', officeAPI);
-app.get('/swanson', swansonAPI);
-app.get('/kanye', kanyeAPI);
+app.post('/quiz/:id', answerCheck);
 
 //---------------------------------Home Page
 function homePage(req, res){
@@ -43,26 +38,86 @@ function homePage(req, res){
 function about(req, res){
   res.status(200).render('about');
 }
-// -------------------------------- Start Quiz
+// ------------------------------------------------------ Start Quiz
+//------ Global Variables
+let questionArray = [];
+let nameList = [];
+let score = 0;
+let quiz = {};
+let playerName = '';
+// ------ Start the journey into the multiverse worm hole
 function startQuiz(req, res){
-  // render object returned from quizBuilder
-  const SQL = `INSERT INTO users (firstName) VALUES ($2) returning *`;
-  const params = [req.body.player];
-    client.query(SQL, params)
-    .then(results => {
-      res.status(200).render('quiz');
-    })
-    .catch(error => {
-      console.log(error);
+  // reset all globals
+  score = 0;
+  questionArray = [];
+  nameList = [];
+  quiz = {};
+  playerName = req.body.player;
+  sunnyQuotes(req, res);
+}
+// ---------------------Randomizes array order
+function shuffleArray(array){
+  for (let i = 0; i < 1000; i++) {
+    let arrayOne = Math.floor((Math.random() * array.length));
+    let arrayTwo = Math.floor((Math.random() * array.length));
+    let reset = array[arrayOne];
+    array[arrayOne] = array[arrayTwo];
+    array[arrayTwo] = reset;
+  }
+  return array;
+}
+//--------- Get the list of names from DB to populate options
+function getNames(req, res){
+  const SQL = `SELECT * FROM dummy`;
+  client.query(SQL)
+    .then(data => {
+      nameList = data.rows.map(name => name.speaker);
+      buildQuiz(req, res);
+    });
+}
+//-------- Builds the actual quiz object
+function buildQuiz(req, res){
+  quiz = (shuffleArray(questionArray.map(question => {
+    let wrongAnswers = nameList;
+    wrongAnswers = wrongAnswers.filter(name => name !== question.quoter ? true : false);
+    wrongAnswers = (shuffleArray(wrongAnswers)).slice(0,3);
+    wrongAnswers.push(question.quoter);
+    let options = shuffleArray(wrongAnswers);
+    return new QuizObject(question, options);
+  }))).map((obj, i) => {
+    obj.id = i;
+    return obj;
+  });
+  res.status(200).render('quiz', {
+    quote: quiz[0],
+    player: req.body.player,
+    score: score
   });
 }
-
+//---- check answer and goto next
+function answerCheck(req, res){
+  let questionID = req.params.id;
+  if(req.body.answer === quiz[questionID].quoter){
+    score++;
+  }
+  questionID++;
+  if(questionID > 4){
+    addScores(req, res);
+  }else{
+    res.status(200).render('quiz', {
+      quote: quiz[questionID],
+      player: req.body.player,
+      score: score
+    });
+  }
+}
+//---------------------------------------------------------API CALLS
 //------------------------------ Always Sunny API
 function sunnyQuotes (req, res){
   let API = 'http://sunnyquotes.net/q.php?random';
   superagent.get(API).then( data => {
-    let newSunny = new Sunny(data.body);
-    res.status(200).send(newSunny);
+    questionArray.push(new Sunny(data.body));
+    breakingBadAPI(req, res);
   })
     .catch(error => console.log(error));
 }
@@ -72,8 +127,8 @@ function breakingBadAPI(req, res){
   const URL = `https://breaking-bad-quotes.herokuapp.com/v1/quotes`;
   superagent.get(URL)
     .then(data => {
-      let quote = new BadQuote(data.body[0]);
-      res.status(200).send(quote);
+      questionArray.push(new BadQuote(data.body[0]));
+      officeAPI(req, res);
     })
     .catch(error => console.log(error));
 }
@@ -83,8 +138,8 @@ function officeAPI(req, res){
   const URL = `https://officeapi.dev/api/quotes/random`;
   superagent.get(URL)
     .then(data => {
-      let quote = new Office((JSON.parse(data.text)).data);
-      res.status(200).send(quote);
+      questionArray.push(new Office((JSON.parse(data.text)).data));
+      swansonAPI(req, res);
     })
     .catch(error => console.log(error));
 }
@@ -94,19 +149,18 @@ function swansonAPI(req, res){
   const URL = `https://ron-swanson-quotes.herokuapp.com/v2/quotes`;
   superagent.get(URL)
     .then(data => {
-      let quote = new Swanson(data.body[0]);
-      res.status(200).send(quote);
+      questionArray.push(new Swanson(data.body[0]));
+      kanyeAPI(req, res);
     })
     .catch(error => console.log(error));
 }
-
 //------------------------------- Kanye API
 function kanyeAPI(req, res){
   const URL = `https://api.kanye.rest`;
   superagent.get(URL)
     .then(data =>{
-      let quote = new Kanye(data.body.quote);
-      res.status(200).send(quote);
+      questionArray.push(new Kanye(data.body.quote));
+      getNames(req, res);
     })
     .catch(error => console.log(error));
 }
@@ -122,7 +176,7 @@ function kanyeAPI(req, res){
 //   });
 // }
 
-//------------------------------- Constructors
+//-------------------------------------------------------- Constructors
 function Sunny(newSunnyQuote){
   this.quote = newSunnyQuote.sqQuote;
   this.quoter = newSunnyQuote.sqWho;
@@ -143,6 +197,20 @@ function Swanson(quote){
 function Kanye(quote){
   this.quote = quote;
   this.quoter = 'Kanye West';
+}
+function QuizObject(quote, options){
+  this.quote = quote.quote;
+  this.quoter = quote.quoter;
+  this.optionA = options[0];
+  this.optionB = options[1];
+  this.optionC = options[2];
+  this.optionD = options[3];
+  this.image = 'https://place-hold.it/175x250';
+}
+function ScoreBoard(obj) {
+  this.name = obj.firstname;
+  this.score = obj.score_number;
+  this.outOf = obj.out_of;
 }
 
 // DATABASE STUFF ----------------------------------------------------------
@@ -173,61 +241,61 @@ function savedQuote(request, response) {
     });
 }
 //--------------------------------- Add Scores
-function addScores(request, response) {
-  const SQL = 'INSERT INTO users (firstName, score_number) VALUES ($1, $2) RETURNING id';
-  const params = [request.body.firstName, request.body.score_number];
+function addScores(req, res) {
+  const SQL = 'INSERT INTO users (firstName, score_number, out_of) VALUES ($1, $2, $3) RETURNING *';
+  const params = [playerName, score, quiz.length];
   client.query(SQL, params)
     .then(results => {
-      response.status(200).redirect(`views/scores`); // need to add object
+      res.status(200).redirect(`/scores`); // need to add object
     })
     .catch(error => {
       console.log(error);
     });
 }
 
-//------------------------------ Save Scores
-function savedScores(request, response) {
+//------------------------------ Get Saved Scores
+function savedScores(req, res) {
   const SQL = 'SELECT * FROM users;';
-
   return client.query(SQL)
     .then(results => {
-      response.status(200).render('scores', {}); // need to enter returning object { scores: results.rows}
+      let scores = results.rows.map(score => new ScoreBoard(score));
+      res.status(200).render('scores', {scores: scores});
     })
     .catch(error => {
       console.log(error);
     });
 }
 
-//--------------------------------- Add Notes 
-  // ---------- (need to keep quote input hidden so only note is visibly updated)
-  app.put('/note/:id, addQuoteNote');
-  function addQuoteNote(request, response) {
-    const SQL = 'UPDATE quotes SET quotes = $1, note = $2 WHERE id = $3';
-    const params = [request.body.quotes, request.body.note, request.params.id];
-  
-    client.query(SQL, params)
-      .then(results => {
-        response.status(200).redirect('view/saved');
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }
-  
-  //--------------------------------- Delete Quote
-  app.delete('/delete/:id', deleteQuote);
-  function deleteQuote(request, response) {
-    const SQL = 'DELETE from quotes WHERE id = $1';
-    const params = [request.params.id];
-  
-    client.query(SQL, params)
-      .then(results => {
-        response.status(200).redirect('view/saved');
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }
+//--------------------------------- Add Notes
+// ---------- (need to keep quote input hidden so only note is visibly updated)
+app.put('/note/:id, addQuoteNote');
+function addQuoteNote(request, response) {
+  const SQL = 'UPDATE quotes SET quotes = $1, note = $2 WHERE id = $3';
+  const params = [request.body.quotes, request.body.note, request.params.id];
+
+  client.query(SQL, params)
+    .then(results => {
+      response.status(200).redirect('view/saved');
+    })
+    .catch(error => {
+      console.log(error);
+    });
+}
+
+//--------------------------------- Delete Quote
+app.delete('/delete/:id', deleteQuote);
+function deleteQuote(request, response) {
+  const SQL = 'DELETE from quotes WHERE id = $1';
+  const params = [request.params.id];
+
+  client.query(SQL, params)
+    .then(results => {
+      response.status(200).redirect('view/saved');
+    })
+    .catch(error => {
+      console.log(error);
+    });
+}
 
 // turn the server on
 client.connect()
@@ -245,22 +313,22 @@ client.connect()
 
 // FAKE DATA - FOR TESTING ONLY
 
-app.get('/fake', (req, res) => {
-  let fakeObj =
-    [
-      {
-      "id": "1",
-      "quote":"Wang is all over my ass because of rent.",
-      "quoter":"Charlie Kelly",
-      "optionA": "Mac",
-      "optionB": "Dee",
-      "optionC": "Frank",
-      "optionD": "Charlie",
-      "image": "image_path.com"
-      },
-    ];
-  res.status(200).render('quiz', {fakeObj});
-});
+// app.get('/fake', (req, res) => {
+//   let fakeObj =
+//     [
+//       {
+//         'id': '1',
+//         'quote':'Wang is all over my ass because of rent.',
+//         'quoter':'Charlie Kelly',
+//         'optionA': 'Mac',
+//         'optionB': 'Dee',
+//         'optionC': 'Frank',
+//         'optionD': 'Charlie',
+//         'image': 'image_path.com'
+//       },
+//     ];
+//   res.status(200).render('quiz', {fakeObj});
+// });
 
 // {
 //   id: question number,
