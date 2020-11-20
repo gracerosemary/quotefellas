@@ -1,32 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <%- include( './layout/head.ejs' ) %>
-  <title>Quiz</title>
+  <link rel="stylesheet" href="./styles/modules/questions.css">
 </head>
+
 <body>
-  <header>
-    <%- include( './layout/header.ejs' ) %>
-  </header>
-  <main>
+  <div id="grid-container">
+    <header>
+      <%- include( './layout/header.ejs' ) %>
+    </header>
+    <main>
+      <div>
+        <h2>Player Name</h2>
+        <p>score: 1</p>
+      </div>
+      <!-- moved the code here to the question partial -->
+      <%- include('./partial/question.ejs') %>
+    </main>
 
-  <div id="quizInput">
-    <form action="">
-      <input id="nameInput" type="text" placeholder="enter name field">
-      <button id="startQuizButton">Start Quiz</button>
-      <input id = "radio1" type="radio" value="Speaker1">Speaker1
-      <input id = "radio2" type="radio" value="Speaker2">Speaker2
-      <input id = "radio3" type="radio" value="Speaker3">Speaker3
-      <input id = "radio4" type="radio" value="Speaker4">Speaker4
-      <input id = "quote" type= "text" placeholder="input field for quote">
-      <button id="saveQuoteButton" >Save</button>
-    </form>
+    <footer>
+      <%- include( './layout/footer.ejs' ) %>
+    </footer>
   </div>
-    
-  </main>
-
-  <footer>
-    <%- include( './layout/footer.ejs' ) %>
-  </footer>
 </body>
+
 </html>

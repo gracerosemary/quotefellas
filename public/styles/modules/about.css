@@ -1,0 +1,15 @@
+.all-bio {
+  width: 100%;
+  max-width: 600px;
+  min-height: 270px;
+  margin: 20px auto;
+  background: #fff;
+  padding: 10px;
+}
+
+.all-bio:nth-child(odd)>figure {
+  float: left;
+}
+.all-bio:nth-child(even)>figure {
+  float: right;
+}

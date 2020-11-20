@@ -4,5 +4,15 @@
 }
 
 body {
-  background: rgb(169, 235, 180);
+  background: rgb(49, 49, 49);
+  font-family: 'Baloo 2', cursive;
+}
+
+.hidden-input {
+  display: none;
+}
+
+a:link, a:visited, a:hover, a:active {
+  color: #fff;
+  text-decoration: none;
 }

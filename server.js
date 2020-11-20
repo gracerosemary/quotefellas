@@ -20,19 +20,20 @@ app.set('view engine', 'ejs');
 //database set up
 const client = new pg.Client(process.env.DATABASE_URL);
 
-//Routes
+// ---------------------------------Routes
 app.get('/', homePage);
+app.get('/scores', savedScores);
+app.post('/scores', addScores);
+app.get('/saved', savedQuote);
+app.post('/save', addQuote);
+app.get('/about', about);
+app.post('/quiz', startQuiz);
+
 app.get('/sunny', sunnyQuotes);
 app.get('/breakingbad', breakingBadAPI);
 app.get('/office', officeAPI);
 app.get('/swanson', swansonAPI);
 app.get('/kanye', kanyeAPI);
-// app.get('/simpsons', simpsonQuotes);
-app.get('/scores', savedScores);
-app.post('/scores', addScores);
-app.get('/saved', savedQuote);
-app.post('/saved', addQuote);
-app.get('/about', about);
 
 //---------------------------------Home Page
 function homePage(req, res){
@@ -42,6 +43,11 @@ function homePage(req, res){
 function about(req, res){
   res.status(200).render('about');
 }
+// -------------------------------- Start Quiz
+function startQuiz(req, res){
+  // render object returned from quizBuilder
+  res.status(200).render('quiz');
+}
 
 //------------------------------ Always Sunny API
 function sunnyQuotes (req, res){
@@ -49,7 +55,6 @@ function sunnyQuotes (req, res){
   superagent.get(API).then( data => {
     let newSunny = new Sunny(data.body);
     res.status(200).send(newSunny);
-    console.log(newSunny);
   })
     .catch(error => console.log(error));
 }
@@ -61,19 +66,16 @@ function breakingBadAPI(req, res){
     .then(data => {
       let quote = new BadQuote(data.body[0]);
       res.status(200).send(quote);
-      console.log(quote);
     })
     .catch(error => console.log(error));
 }
 
 //----------------------------- Office API
 function officeAPI(req, res){
-  // console.log('thats what she said');
   const URL = `https://officeapi.dev/api/quotes/random`;
   superagent.get(URL)
     .then(data => {
       let quote = new Office((JSON.parse(data.text)).data);
-      // console.log(quote);
       res.status(200).send(quote);
     })
     .catch(error => console.log(error));
@@ -81,12 +83,10 @@ function officeAPI(req, res){
 
 //--------------------------- Ron Swanson API
 function swansonAPI(req, res){
-  // console.log('no');
   const URL = `https://ron-swanson-quotes.herokuapp.com/v2/quotes`;
   superagent.get(URL)
     .then(data => {
       let quote = new Swanson(data.body[0]);
-      // console.log(quote);
       res.status(200).send(quote);
     })
     .catch(error => console.log(error));
@@ -94,12 +94,10 @@ function swansonAPI(req, res){
 
 //------------------------------- Kanye API
 function kanyeAPI(req, res){
-  console.log('Aquaman was here');
   const URL = `https://api.kanye.rest`;
   superagent.get(URL)
     .then(data =>{
       let quote = new Kanye(data.body.quote);
-      console.log(quote);
       res.status(200).send(quote);
     })
     .catch(error => console.log(error));
@@ -154,7 +152,7 @@ function addQuote(request, response) {
     });
 }
 
-//--------------------------------- Save Quote
+//--------------------------------- Saved Quote
 function savedQuote(request, response) {
   const SQL = 'SELECT * FROM quotes;';
 
