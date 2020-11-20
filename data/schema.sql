@@ -3,7 +3,8 @@ DROP TABLE if exists users;
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     firstName VARCHAR(255),
-    score_number INT
+    score_number INT,
+    out_of INT
 );
 
 DROP TABLE if exists quotes;
