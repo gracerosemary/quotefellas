@@ -46,7 +46,15 @@ function about(req, res){
 // -------------------------------- Start Quiz
 function startQuiz(req, res){
   // render object returned from quizBuilder
-  res.status(200).render('quiz');
+  const SQL = `INSERT INTO users (firstName) VALUES ($2) returning *`;
+  const params = [req.body.player];
+    client.query(SQL, params)
+    .then(results => {
+      res.status(200).render('quiz');
+    })
+    .catch(error => {
+      console.log(error);
+  });
 }
 
 //------------------------------ Always Sunny API
@@ -158,7 +166,7 @@ function savedQuote(request, response) {
 
   return client.query(SQL)
     .then(results => {
-      response.status(200).render('saved', {}); // need to enter returning object
+      response.status(200).render('saved', {}); // need to enter returning object { quotes: results.rows}
     })
     .catch(error => {
       console.log(error);
@@ -177,20 +185,49 @@ function addScores(request, response) {
     });
 }
 
-//------------------------------ Saved Scores
+//------------------------------ Save Scores
 function savedScores(request, response) {
   const SQL = 'SELECT * FROM users;';
 
   return client.query(SQL)
     .then(results => {
-      response.status(200).render('scores', {}); // need to enter returning object
+      response.status(200).render('scores', {}); // need to enter returning object { scores: results.rows}
     })
     .catch(error => {
       console.log(error);
     });
 }
 
-// Need to add update/delete - G will do on Thursday (need to figure out empty column for note with update feature)
+//--------------------------------- Add Notes 
+  // ---------- (need to keep quote input hidden so only note is visibly updated)
+  app.put('/note/:id, addQuoteNote');
+  function addQuoteNote(request, response) {
+    const SQL = 'UPDATE quotes SET quotes = $1, note = $2 WHERE id = $3';
+    const params = [request.body.quotes, request.body.note, request.params.id];
+  
+    client.query(SQL, params)
+      .then(results => {
+        response.status(200).redirect('view/saved');
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+  
+  //--------------------------------- Delete Quote
+  app.delete('/delete/:id', deleteQuote);
+  function deleteQuote(request, response) {
+    const SQL = 'DELETE from quotes WHERE id = $1';
+    const params = [request.params.id];
+  
+    client.query(SQL, params)
+      .then(results => {
+        response.status(200).redirect('view/saved');
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
 
 // turn the server on
 client.connect()
@@ -202,3 +239,48 @@ client.connect()
   .catch (error => {
     console.log(error);
   });
+
+
+
+
+// FAKE DATA - FOR TESTING ONLY
+
+app.get('/fake', (req, res) => {
+  let fakeObj =
+    [
+      {
+      "id": "1",
+      "quote":"Wang is all over my ass because of rent.",
+      "quoter":"Charlie Kelly",
+      "optionA": "Mac",
+      "optionB": "Dee",
+      "optionC": "Frank",
+      "optionD": "Charlie",
+      "image": "image_path.com"
+      },
+    ];
+  res.status(200).render('quiz', {fakeObj});
+});
+
+// {
+//   id: question number,
+//   quote: 'quote',
+//   quoter: 'quoter',
+//   optionA: name1,
+//   optionB: name2,
+//   optionC: name3,
+//   optionD: name4,
+//   image: image_path
+//   }
+
+
+
+
+
+
+
+
+
+
+
+
