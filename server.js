@@ -114,6 +114,7 @@ function answerCheck(req, res){
     });
   }
 }
+
 //---------------------------------------------------------API CALLS
 //------------------------------ Always Sunny API
 function sunnyQuotes (req, res){
@@ -220,16 +221,16 @@ function ScoreBoard(obj) {
 
 //--------------------------------- Add Quote
 function addQuote(request, response) {
-  const SQL = 'INSERT INTO quotes (quotes, note) VALUES ($1, $2) RETURNING id';
-  const params = [quiz[0].quote, request.body.note];
+  const SQL = 'INSERT INTO quotes (quotes, quoter, note) VALUES ($1, $2, $3) RETURNING id';
+  const params = [quiz[0].quote, quiz[0].quoter, request.body.note];
   
+  console.log(quiz[0].quote);
   // console.log(params);
-  // console.log(quiz[0].quote);
   
   client.query(SQL, params)
   .then(results => {
-      console.log(results.rows);
-      response.status(200).redirect('/saved'); // need to have it not redirect but I'm not sure how
+      // console.log(results.rows);
+      response.status(200); 
     })
     .catch(error => {
       console.log(error);
@@ -242,8 +243,7 @@ function savedQuote(request, response) {
 
   return client.query(SQL)
     .then(results => {
-      console.log(results.rows);
-      response.status(200).render('./partial/quote', { quizobject : results.rows });
+      response.status(200).render('saved', { quizobject : results.rows });
     })
     .catch(error => {
       console.log(error);
@@ -276,15 +276,14 @@ function savedScores(req, res) {
 }
 
 //--------------------------------- Add Notes
-// ---------- (need to keep quote input hidden so only note is visibly updated)
-app.put('/note/:id, addQuoteNote');
+app.put('/saved', addQuoteNote);
 function addQuoteNote(request, response) {
-  const SQL = 'UPDATE quotes SET quotes = $1, note = $2 WHERE id = $3';
-  const params = [request.body.quotes, request.body.note, request.params.id];
+  const SQL = 'UPDATE quotes SET note = $1 WHERE id=$2';
+  const params = [request.body.note, request.body.id];
 
   client.query(SQL, params)
     .then(results => {
-      response.status(200).redirect('view/saved');
+      response.status(200).redirect('saved');
     })
     .catch(error => {
       console.log(error);
@@ -292,14 +291,15 @@ function addQuoteNote(request, response) {
 }
 
 //--------------------------------- Delete Quote
-app.delete('/delete/:id', deleteQuote);
+app.delete('/saved', deleteQuote);
 function deleteQuote(request, response) {
   const SQL = 'DELETE from quotes WHERE id = $1';
-  const params = [request.params.id];
-
+  const params = [request.body.id];
+  // console.log(request.body);
   client.query(SQL, params)
-    .then(results => {
-      response.status(200).redirect('view/saved');
+  .then(results => {
+    console.log(results.rows);
+      response.status(200).redirect('saved');
     })
     .catch(error => {
       console.log(error);
