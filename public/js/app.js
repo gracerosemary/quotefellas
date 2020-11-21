@@ -18,7 +18,6 @@ $(() => {
     $('#submit-answer').fadeToggle(1000);
     $('#next-question').fadeToggle(1000);
 
-    console.log($('input[]').val());
 
     if(answer === correct){
       $(`input[name=answer]:checked`).parent().addClass('correct-answer');
