@@ -1,16 +1,40 @@
-"use strict";
+'use strict';
 
-$(function () {
-  $("#dropdown").click((event) => {
-    console.log(event.target);
-    $("#menu").slideToggle(500);
+// drop down menu control
+$(() => {
+  $('#dropdown').click(() => {
+    $('#menu').slideToggle(500);
   });
 });
 
-function changeButton() {
-  const btn = document.getElementById("submitButton");
-  btn.innerHTML = 'Next Question';
-}
+
+$(() => {
+  $('#submit-answer').click(() => {
+    let answer = $('input[name=answer]:checked').val();
+    let correct = $('input[name=correct]').val();
+    console.log(correct);
+    console.log(answer);
+    $('.radios').addClass('click-thru');
+    $('#submit-answer').fadeToggle(1000);
+    $('#next-question').fadeToggle(1000);
+
+    console.log($('input[]').val());
+
+    if(answer === correct){
+      $(`input[name=answer]:checked`).parent().addClass('correct-answer');
+    }
+    else {
+      $('input[name=answer]:checked').parent().addClass('incorrect-answer');
+      // highlight correct answer
+    }
+  });
+});
+
+
+
+
+
+
 
 
 
