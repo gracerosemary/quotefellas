@@ -220,16 +220,16 @@ function ScoreBoard(obj) {
 
 //--------------------------------- Add Quote
 function addQuote(request, response) {
-  const SQL = 'INSERT INTO quotes (quotes, note) VALUES ($1, $2) RETURNING id';
-  const params = [quiz[0].quote, request.body.note];
+  const SQL = 'INSERT INTO quotes (quotes, quoter, note) VALUES ($1, $2, $3) RETURNING id';
+  const params = [quiz[0].quote, quiz[0].quoter, request.body.note];
   
   // console.log(params);
-  // console.log(quiz[0].quote);
+  // console.log(quiz[0]);
   
   client.query(SQL, params)
   .then(results => {
       console.log(results.rows);
-      response.status(200).redirect('/saved'); // need to have it not redirect but I'm not sure how
+      response.status(200); 
     })
     .catch(error => {
       console.log(error);
