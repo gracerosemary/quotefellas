@@ -2,27 +2,33 @@
   <!-- insert data from object for quote, and options A - D -->
   <p><%=quote.quote%></p>
   <div>
-    <script src="../../js/app.js"></script>
+    <!-- <script src="../../js/app.js"></script> -->
     <form action="/quiz/<%=quote.id%>" method="POST">
-      <label for="A">
+      <label for="optionA" class="radios">
         <%=quote.optionA%>
-        <input type="radio" name="answer" value="<%=quote.optionA%>" required />
+        <input type="radio" name="answer" value="<%=quote.optionA%>" id="optionA" required />
       </label>
-      <label for="B">
+      <label for="optionB" class="radios">
         <%=quote.optionB%>
-        <input type="radio" name="answer" value="<%=quote.optionB%>" required />
+        <input type="radio" name="answer" value="<%=quote.optionB%>" id="optionB" required />
       </label>
-      <label for="C">
+      <label for="optionC" class="radios">
         <%=quote.optionC%>
-        <input type="radio" name="answer" value="<%=quote.optionC%>" required />
+        <input type="radio" name="answer" value="<%=quote.optionC%>" id="optionC" required />
       </label>
-      <label for="D">
+      <label for="optionD" class="radios">
         <%=quote.optionD%>
-        <input type="radio" name="answer" value="<%=quote.optionD%>" required />
+        <input type="radio" name="answer" value="<%=quote.optionD%>" id="optionD" required />
       </label>
-      <button type="submit" onclick="changeButton()" id="submitButton">
-        Submit
-      </button>
+      <input type="text" name="correct" value="<%=quote.quoter %>" class="hidden-input">
+      <div id="button-holder">
+        <button type="button" id="submit-answer">
+          Submit
+        </button>
+        <button type="submit" id="next-question">
+          Continue
+        </button>
+      </div>
     </form>
   </div>
   <!-- do method override to make PUT -->
