@@ -34,10 +34,12 @@ app.post('/quiz/:id', answerCheck);
 function homePage(req, res){
   res.status(200).render('index');
 }
+
 //-------------------------------- About
 function about(req, res){
   res.status(200).render('about');
 }
+
 // ------------------------------------------------------ Start Quiz
 //------ Global Variables
 let questionArray = [];
@@ -104,6 +106,7 @@ function answerCheck(req, res){
   if(questionID > 4){
     addScores(req, res);
   }else{
+    console.log(questionID)
     res.status(200).render('quiz', {
       quote: quiz[questionID],
       player: req.body.player,
@@ -165,7 +168,7 @@ function kanyeAPI(req, res){
     .catch(error => console.log(error));
 }
 
-//--------------------------------- Simpsons API
+//--------------------------------- Simpsons API (Stretch Goal)
 // function simpsonQuotes (req, res){
 //   let API = 'https://thesimpsonsquoteapi.glitch.me/quotes';
 
@@ -218,23 +221,29 @@ function ScoreBoard(obj) {
 //--------------------------------- Add Quote
 function addQuote(request, response) {
   const SQL = 'INSERT INTO quotes (quotes, note) VALUES ($1, $2) RETURNING id';
-  const params = [request.body.quotes, request.body.note];
+  const params = [quiz[0].quote, request.body.note];
+  
+  // console.log(params);
+  // console.log(quiz[0].quote);
+  
   client.query(SQL, params)
-    .then(results => {
-      response.status(200).redirect(`view/saved`); // need to add object.id
+  .then(results => {
+      console.log(results.rows);
+      response.status(200).redirect('/saved'); // need to have it not redirect but I'm not sure how
     })
     .catch(error => {
       console.log(error);
     });
 }
 
-//--------------------------------- Saved Quote
+//--------------------------------- Saved Quotes
 function savedQuote(request, response) {
   const SQL = 'SELECT * FROM quotes;';
 
   return client.query(SQL)
     .then(results => {
-      response.status(200).render('saved', {}); // need to enter returning object { quotes: results.rows}
+      console.log(results.rows);
+      response.status(200).render('./partial/quote', { quizobject : results.rows });
     })
     .catch(error => {
       console.log(error);
@@ -246,7 +255,7 @@ function addScores(req, res) {
   const params = [playerName, score, quiz.length];
   client.query(SQL, params)
     .then(results => {
-      res.status(200).redirect(`/scores`); // need to add object
+      res.status(200).redirect(`/scores`);
     })
     .catch(error => {
       console.log(error);
@@ -310,26 +319,6 @@ client.connect()
 
 
 
-
-// FAKE DATA - FOR TESTING ONLY
-
-// app.get('/fake', (req, res) => {
-//   let fakeObj =
-//     [
-//       {
-//         'id': '1',
-//         'quote':'Wang is all over my ass because of rent.',
-//         'quoter':'Charlie Kelly',
-//         'optionA': 'Mac',
-//         'optionB': 'Dee',
-//         'optionC': 'Frank',
-//         'optionD': 'Charlie',
-//         'image': 'image_path.com'
-//       },
-//     ];
-//   res.status(200).render('quiz', {fakeObj});
-// });
-
 // {
 //   id: question number,
 //   quote: 'quote',
@@ -340,9 +329,6 @@ client.connect()
 //   optionD: name4,
 //   image: image_path
 //   }
-
-
-
 
 
 
