@@ -12,5 +12,6 @@ DROP TABLE if exists quotes;
 CREATE TABLE quotes (
     id SERIAL PRIMARY KEY,
     quotes VARCHAR(500),
+    quoter VARCHAR(255),
     note VARCHAR(500)
 );

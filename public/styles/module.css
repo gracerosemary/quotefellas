@@ -71,8 +71,19 @@ footer {
   color: #fff;
 }
 
-/* ---------Quote---------- */
+/* ---------Quotes & Notes---------- */
 
 p.quote {
   color: white;
+}
+
+input.note {
+  word-wrap: break-word;
+  word-break: break-all;
+  height: 50px;
+  width: 350px;
+}
+
+input.hide {
+  display:none;
 }
