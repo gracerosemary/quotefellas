@@ -1,5 +1,3 @@
-/* ---------Header---------- */
-
 header {
   background: #000;
   color: #fff;
@@ -71,8 +69,24 @@ footer {
   color: #fff;
 }
 
-/* ---------Quote---------- */
+/* ---------Quotes & Notes---------- */
 
 p.quote {
   color: white;
+}
+
+
+/* disable element */
+.click-thru {
+  pointer-events: none
+
+input.note {
+  word-wrap: break-word;
+  word-break: break-all;
+  height: 50px;
+  width: 350px;
+}
+
+input.hide {
+  display:none;
 }
