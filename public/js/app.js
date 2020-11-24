@@ -36,8 +36,7 @@ $(() => {
 
 // loading bar controls for home page
 $(() => {
-  $('#start-quiz').click(event => {
-    event.preventDefault();
+  $('#start-quiz').click(() => {
     let validator = $('input').val();
     if(validator.length > 0){
       $('#fader').toggle();
