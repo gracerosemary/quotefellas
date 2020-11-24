@@ -2,20 +2,22 @@
   width: 100%;
   max-width: 600px;
   padding: 15px;
-  background: #fff;
+  background: black;
+  color: white;
   margin: 20px auto;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 main>div {
-font-family: 'Carter One', cursive;
+font-family: 'Merriweather', serif;
 font-size: 25px;
 width: 90%;
 max-width: 400px;
 height: 70px;
 margin: 20px auto;
 padding: 5px;
-background: #fff;
+background: black;
+color: white;
 line-height: 60px;
 border-radius: 10px;
 box-shadow: 0px 2px 3px #000;
@@ -25,13 +27,13 @@ main>div>h2 {
   margin-left: 10px;
 }
 
-span {
+/* span {
   border: 1px solid #000;
   padding: 5px;
   height: 40px;
   position: relative;
   left: 20;
-}
+} */
 
 #questions>div {
   width: 60%;
@@ -46,7 +48,8 @@ label {
   padding: 10px;
   text-align: left;
   display: block;
-  background: #fff;
+  background: white;
+  color: black;
   margin: 10px auto;
   border-radius: 5px;
   border: 2px solid #fff;
@@ -60,11 +63,13 @@ button {
   width: 200px;
   height: 60px;
   margin: 20px auto;
-  background: #fff;
+  background: black;
+  color: white;
   border: none;
   border-radius: 10px;
   font-size: 20px;
 }
+
 #button-holder {
   width: 200px;
   height: 60px;
@@ -93,4 +98,8 @@ button {
 
 .incorrect-answer {
   border: 2px solid rgba(224, 0, 0, 0.733);
+}
+
+.scoreheader {
+  color: #df2424;
 }
