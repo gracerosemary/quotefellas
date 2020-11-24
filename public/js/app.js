@@ -44,4 +44,3 @@ $(() => {
     }
   });
 });
-console.log('hello world');
