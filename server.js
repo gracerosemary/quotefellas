@@ -12,11 +12,11 @@ require ('dotenv').config();
 const port = process.env.PORT || 3000;
 //turning things on
 const app = express();
-app.use(methodOverride('_method'));
 app.use(express.static('./public'));
 app.use(express.urlencoded({extended:true}));
 app.use(cors());
 app.set('view engine', 'ejs');
+app.use(methodOverride('_method'));
 //database set up
 const client = new pg.Client(process.env.DATABASE_URL);
 
@@ -254,7 +254,7 @@ function savedScores(req, res) {
 }
 
 //--------------------------------- Add Notes
-app.put('/update', addQuoteNote);
+app.put('/saved', addQuoteNote);
 function addQuoteNote(req, res) {
   const SQL = 'UPDATE quotes SET note = $1 WHERE id=$2';
   const params = [req.body.note, req.body.id];
@@ -267,11 +267,11 @@ function addQuoteNote(req, res) {
 }
 
 //--------------------------------- Delete Quote
-app.post('/delete', deleteQuote);
+app.delete('/saved:id', deleteQuote);
 function deleteQuote(req, res) {
-  console.log('helol');
+  console.log(req.params);
   const SQL = 'DELETE from quotes WHERE id = $1';
-  const params = [req.body.id];
+  const params = [req.params.id];
   client.query(SQL, params)
     .then(results => {
       console.log(results.rows);

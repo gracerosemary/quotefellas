@@ -1,6 +1,6 @@
 <% quizobject.forEach(quote => { %>
 <div class="saved">
-  <form action="/update?_method=PUT" method="POST">
+  <form action="/saved?_method=PUT" method="POST">
     <section id="saved-quotes">
       <p><%= quote.quotes %></p>
       <p>- <%=quote.quoter%></p>
@@ -12,11 +12,11 @@
     </section>
   </form>
 
-  <form action="/delete" method="POST">
-    <input class="hide" type="text" name="quote" value="<%= quote.quotes %>" />
+  <form action="/saved/<%= quote.id %>?_method=DELETE" method="POST">
+    <!-- <input class="hide" type="text" name="quote" value="<%= quote.quotes %>" />
     <input class="hide" type="text" name="quoter" value="<%=quote.quoter%>" />
     <input class="hide" type="text" name="note" value="<%= quote.note %>" />
-    <input class="hide" type="text" name="id" value="<%=quote.id %>" />
+    <input class="hide" type="text" name="id" value="<%=quote.id %>" /> -->
     <button type="submit" id="delete">Delete Quote</button>
   </form>
 </div>
