@@ -28,3 +28,7 @@
 img {
   height: 200px;
 }
+
+input.hide {
+  display: none;
+}
