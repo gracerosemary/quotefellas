@@ -18,3 +18,9 @@ a:link, a:visited, a:hover, a:active {
   text-decoration: none;
 }
 
+h1 {
+  font-stretch: ultra-condensed;
+  letter-spacing: .1px;
+  line-height: 40px;
+}
+
