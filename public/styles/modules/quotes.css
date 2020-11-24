@@ -1,19 +1,29 @@
+.saved {
+  border: 2px solid black;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 #saved-quotes>p:first-child {
   width: 100%;
   max-width: 600px;
   padding: 15px;
-  background: #fff;
-  margin: 20px auto;
-  border-radius: 20px;
+  /* background: black; */
+  color: white;
+  margin: 10px auto;
+  border-radius: 10px;
 }
 
 #saved-quotes>p:nth-child(2) {
   width: 50%;
   max-width: 350px;
-  padding: 10px;
-  background: #fff;
-  margin: 20px auto;
-  border-radius: 20px;
+  /* padding: 10px; */
+  /* background: black; */
+  color: white;
+  margin: auto;
+  margin-bottom: 20px;
+  border-radius: 10px;
 }
 
 #saved-quotes>p:last-child {
@@ -21,14 +31,45 @@
   max-width: 600px;
   padding: 15px;
   background: rgb(206, 206, 206);
-  margin: 20px auto;
-  border-radius: 20px;
+  margin: 10px auto;
+  border-radius: 10px;
 }
 
-img {
-  height: 200px;
+input.note {
+  width: 45%;
+  max-width: 350px;
+  padding: 10px;
+  background: black;
+  color: white;
+  margin: auto;
+  margin-top: 10px;
+  border-radius: 10px;
 }
 
 input.hide {
   display: none;
+}
+
+h2 {
+  color: white;
+}
+
+::placeholder {
+  color: #df2424;
+}
+
+button {
+  width: 100px;
+  height: 20px;
+  margin: 10px auto;
+  background: black;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+#delete {
+  width: 200px;
+  margin-bottom: 20px;
 }

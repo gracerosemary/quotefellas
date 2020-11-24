@@ -13,3 +13,7 @@
 .all-bio:nth-child(even)>figure {
   float: right;
 }
+
+h2 {
+  color: white;
+}
