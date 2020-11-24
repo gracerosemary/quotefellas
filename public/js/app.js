@@ -3,7 +3,7 @@
 // drop down menu control
 $(() => {
   $('#dropdown').click(() => {
-    $('#menu').slideToggle(500);
+    $('#menu').fadeToggle(500);
   });
 });
 
@@ -25,12 +25,15 @@ $(() => {
           $(`#${children[i].id}`).parent().addClass('correct-answer');
         }
       }
-    } else {
+      $('#next-question').text('Incorrect >>');
+    }
+    else {
       $(`input[name=answer]:checked`).parent().addClass('correct-answer');
       // update score board in real time before route call
       let score = $('#player-score').text();
       score++;
       $('#player-score').text(score);
+      $('#next-question').text('Correct >>');
     }
   });
 });
@@ -48,7 +51,7 @@ $(() => {
 
 // saved quote text change
 $(() => {
-  $('#save-button').click(() => {
+  $('#save').click(() => {
     $('#save').fadeToggle(1000); // remove save button
     $('#saved').fadeToggle(1000); //show saved
   });

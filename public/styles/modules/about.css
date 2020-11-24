@@ -17,3 +17,16 @@
 h2 {
   color: white;
 }
+
+img {
+  height: 200px;
+  margin: 10px;
+}
+
+section > p {
+  text-align: left;
+}
+
+.all-bio {
+  padding: 10px;
+}

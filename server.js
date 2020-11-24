@@ -29,6 +29,8 @@ app.post('/save', addQuote);
 app.get('/about', about);
 app.post('/quiz', startQuiz);
 app.post('/quiz/:id', answerCheck);
+app.delete('/saved', deleteQuote);
+app.put('/saved', addQuoteNote);
 
 app.use('*', error404);
 
@@ -254,7 +256,6 @@ function savedScores(req, res) {
 }
 
 //--------------------------------- Add Notes
-app.put('/saved', addQuoteNote);
 function addQuoteNote(req, res) {
   const SQL = 'UPDATE quotes SET note = $1 WHERE id=$2';
   const params = [req.body.note, req.body.id];
@@ -267,11 +268,9 @@ function addQuoteNote(req, res) {
 }
 
 //--------------------------------- Delete Quote
-app.delete('/saved:id', deleteQuote);
 function deleteQuote(req, res) {
-  console.log(req.params);
   const SQL = 'DELETE from quotes WHERE id = $1';
-  const params = [req.params.id];
+  const params = [req.body.id];
   client.query(SQL, params)
     .then(results => {
       console.log(results.rows);

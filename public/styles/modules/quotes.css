@@ -1,4 +1,4 @@
-.saved {
+#saved-quotes {
   width: 90%;
   margin: 10px auto;
   background: rgb(29, 29, 29);
@@ -15,7 +15,6 @@
   color: rgb(218, 218, 218);
   margin: 10px auto;
   border-radius: 10px;
-  font-family: sans-serif;
 }
 
 #saved-quotes>p:nth-child(2) {
@@ -37,6 +36,7 @@
 
 input.note {
   width: 80%;
+  height: 60px;
   max-width: 350px;
   padding: 10px;
   background: black;
@@ -69,7 +69,15 @@ button {
   display: block;
 }
 
+#save-notes {
+  height: 30px;
+}
+
 #delete {
   width: 200px;
   margin-bottom: 20px;
+}
+
+hr {
+  margin: 5px;
 }

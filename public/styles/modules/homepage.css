@@ -1,7 +1,7 @@
 
  main p {
    width: 300px;
-   padding: 10px;
+   padding: 20px;
    margin: 20px auto;
    background: black;
    color: white;
@@ -32,9 +32,15 @@ button {
   color: white;
   border: none;
   border-radius: 10px;
+  border: 2px dotted #fff;
   font-size: 20px;
 }
 
 ::placeholder {
   color: #df2424;
+}
+
+main {
+  background: url('/images/homepage.jpg') center bottom no-repeat;
+  height: 90vh;
 }
