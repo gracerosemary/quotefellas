@@ -6,6 +6,7 @@
 body {
   background: rgb(49, 49, 49);
   font-family: 'Baloo 2', cursive;
+  min-width: 360px;
 }
 
 .hidden-input {

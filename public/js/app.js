@@ -37,6 +37,7 @@ $(() => {
 // loading bar controls for home page
 $(() => {
   $('#start-quiz').click(() => {
-    console.log('clicky clicky');
+    $('#fader').toggle();
+    $('#loading').toggle();
   });
 });
