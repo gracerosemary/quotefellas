@@ -103,8 +103,6 @@ p.quote {
 
 /* loading screen stuff */
 
-
-
 #loading {
   width: 60%;
   height: 120px;
@@ -137,4 +135,9 @@ p.quote {
   background: rgba(0, 0, 0, 0.7);
   z-index: 2;
   display: none;
+}
+
+#errors > img {
+  width: 95%;
+  margin: 10px auto;
 }

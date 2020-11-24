@@ -32,11 +32,13 @@
     </form>
   </div>
   <!-- do method override to make PUT -->
-  <form action="/save" method="POST">
+  <form action="/save" method="POST" id="save-button">
     <!-- insert data from object to be saved -->
-    <input name="quote" value="" class="hidden-input" />
-    <input name="quoter" value="" class="hidden-input" />
-    <input name="photo" value="" class="hidden-input" />
+    <input name="quote" value="<%=quote.quote%>" class="hidden-input" />
+    <input name="quoter" value="<%=quote.quoter %>" class="hidden-input" />
+    <div id="save-button-container">
     <button type="submit" id="save">save quote</button>
+    <button type="button" id="saved">quote saved</button>
+    </div>
   </form>
 </section>

@@ -171,17 +171,6 @@ function kanyeAPI(req, res){
     .catch(error => error500(req, res, error));
 }
 
-//--------------------------------- Simpsons API (Stretch Goal)
-// function simpsonQuotes (req, res){
-//   let API = 'https://thesimpsonsquoteapi.glitch.me/quotes';
-
-//   superagent.get(API).then(data => {
-//     console.log(data.body);
-//     let newSimpson = new Simpson(data.body);
-//     console.log(newSimpson);
-//   });
-// }
-
 //-------------------------------------------------------- Constructors
 function Sunny(newSunnyQuote){
   this.quote = newSunnyQuote.sqQuote;
@@ -223,12 +212,10 @@ function ScoreBoard(obj) {
 
 //--------------------------------- Add Quote
 function addQuote(req, res) {
-  const SQL = 'INSERT INTO quotes (quotes, quoter, note) VALUES ($1, $2, $3) RETURNING id';
-  const params = [quiz[0].quote, quiz[0].quoter, req.body.note];
-
+  const SQL = 'INSERT INTO quotes (quotes, quoter) VALUES ($1, $2) RETURNING id';
+  const params = [req.body.quote, req.body.quoter];
   client.query(SQL, params)
     .then(() => {
-      // console.log(results.rows);
       res.status(200);
     })
     .catch(error => error500(req, res, error));
@@ -267,11 +254,11 @@ function savedScores(req, res) {
 }
 
 //--------------------------------- Add Notes
-app.put('/saved', addQuoteNote);
+app.put('/update', addQuoteNote);
 function addQuoteNote(req, res) {
   const SQL = 'UPDATE quotes SET note = $1 WHERE id=$2';
   const params = [req.body.note, req.body.id];
-
+  console.log('saving the thing');
   client.query(SQL, params)
     .then(() => {
       res.status(200).redirect('saved');
@@ -280,8 +267,9 @@ function addQuoteNote(req, res) {
 }
 
 //--------------------------------- Delete Quote
-app.delete('/saved', deleteQuote);
+app.post('/delete', deleteQuote);
 function deleteQuote(req, res) {
+  console.log('helol');
   const SQL = 'DELETE from quotes WHERE id = $1';
   const params = [req.body.id];
   client.query(SQL, params)
@@ -295,11 +283,13 @@ function deleteQuote(req, res) {
 // ------------------------- Errors
 function error404(req, res) {
   console.log('Error 404');
-  res.status(404).render(`error`);
+  const image = `https://http.cat/404.jpg`;
+  res.status(404).render(`error`, {image: image});
 }
 function error500(req, res, error) {
   console.log('ERROR 500:', error);
-  res.status(500).render(`error`);
+  const image = `https://http.cat/500.jpg`;
+  res.status(404).render(`error`, {image: image});
 }
 
 // turn the server on

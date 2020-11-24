@@ -18,18 +18,19 @@ $(() => {
     // if the answer is incorrect highlight in red
     if(answer !== correct){
       $(`input[name=answer]:checked`).parent().addClass('incorrect-answer');
+      let children = $('input[name=answer]');
+      //highlight the correct answer in green
+      for (let i = 0; i < 4; i++){
+        if (children[i].value === correct){
+          $(`#${children[i].id}`).parent().addClass('correct-answer');
+        }
+      }
     } else {
+      $(`input[name=answer]:checked`).parent().addClass('correct-answer');
       // update score board in real time before route call
       let score = $('#player-score').text();
       score++;
       $('#player-score').text(score);
-    }
-    //highlight the correct answer in green
-    let children = $('input[name=answer]');
-    for (let i = 0; i < 4; i++){
-      if (children[i].value === correct){
-        $(`#${children[i].id}`).parent().addClass('correct-answer');
-      }
     }
   });
 });
@@ -42,5 +43,13 @@ $(() => {
       $('#fader').toggle();
       $('#loading').toggle();
     }
+  });
+});
+
+// saved quote text change
+$(() => {
+  $('#save-button').click(() => {
+    $('#save').fadeToggle(1000); // remove save button
+    $('#saved').fadeToggle(1000); //show saved
   });
 });
