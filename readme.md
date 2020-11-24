@@ -1,7 +1,7 @@
-# [INSERT APP NAME]
+# QuoteFellas
 ## Version 1.5  
 Nov 21, 2020  
-## [INSERT TEAM NAME] 
+## Team QuoteFellas 
 + Grace Choi
 + Klace Koch
 + Dominique Augurson
@@ -10,11 +10,11 @@ Nov 21, 2020
 ## Project Description/Overview
 tl;dr - An App that provides users a way to remember moments from their favorite TV show or movie by quizzing their knowledge of memorable quotes. 
 
-This app provides a resource for users to interact with some of the most quotable lines from television and pop-culture. Upon the formation of [INSERT TEAM NAME], we immediately started to connect over our favorite TV shows, and characters. 
+This app provides a resource for users to interact with some of the most quotable lines from television and pop-culture. Upon the formation of QuoteFellas, we immediately started to connect over our favorite TV shows, and characters. 
 
-Our app, [INSERT APP NAME] brings those quotable and memorable moments to our users. The problem [INSERT APP NAME] addresses is getting all of these awesome lines under one roof.
+Our app, QuoteFellas brings those quotable and memorable moments to our users. The problem QuoteFellas addresses is getting all of these awesome lines under one roof.
 
-[INSERT APP NAME] uses 6 unique APIs that serve some of TV's and pop-culture's best quotes to our users. Upon submitting your name and starting the quiz, [INSERT APP NAME] generates a quiz of 5 random quotes. 
+QuoteFellas uses 6 unique APIs that serve some of TV's and pop-culture's best quotes to our users. Upon submitting your name and starting the quiz, QuoteFellas generates a quiz of 5 random quotes. 
 
 ## Getting Started
 *The way we do it:*
@@ -26,7 +26,7 @@ Our app, [INSERT APP NAME] brings those quotable and memorable moments to our us
 
 ## Architecture
 
-[INSERT APP NAME] uses javascript, HTML, CSS, and SQL as its base languages. Libraries used include jQuery, nodeJS, postgresql, superagent, cors, and express.
+QuoteFellas uses javascript, HTML, CSS, and SQL as its base languages. Libraries used include jQuery, nodeJS, postgresql, superagent, cors, and express.
 
 Minimum Viable Product (MVP) definition
 - Homepage where user enters name
@@ -42,7 +42,7 @@ Minimum Viable Product (MVP) definition
 ### Features: 
 - Notes (update feature on saved quote)
 - Score keeping
-- Theme TBD
+- QuoteFellas
 
 ### APIs Used
 [The Office Quotes](https://www.officeapi.dev/)  
@@ -87,6 +87,11 @@ Minimum Viable Product (MVP) definition
 - Quiz pages now have uniform 
 - Fine touches on CSS
 - Save/update/add features added to database (MVP)
+
+*11/23/2020*
+- Offically name QuoteFellas
+- CSS and styling
+- presentation
 
 ## Credits  
 Thanks to Ray for finding that extra dot for us.
