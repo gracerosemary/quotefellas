@@ -30,6 +30,8 @@ app.get('/about', about);
 app.post('/quiz', startQuiz);
 app.post('/quiz/:id', answerCheck);
 
+app.use('*', error404);
+
 //---------------------------------Home Page
 function homePage(req, res){
   res.status(200).render('index');
@@ -118,11 +120,12 @@ function answerCheck(req, res){
 //------------------------------ Always Sunny API
 function sunnyQuotes (req, res){
   let API = 'http://sunnyquotes.net/q.php?random';
-  superagent.get(API).then( data => {
-    questionArray.push(new Sunny(data.body));
-    breakingBadAPI(req, res);
-  })
-    .catch(error => console.log(error));
+  superagent.get(API)
+    .then( data => {
+      questionArray.push(new Sunny(data.body));
+      breakingBadAPI(req, res);
+    })
+    .catch(error => error500(req, res, error));
 }
 
 //----------------------------- Breaking Bad API
@@ -133,7 +136,7 @@ function breakingBadAPI(req, res){
       questionArray.push(new BadQuote(data.body[0]));
       officeAPI(req, res);
     })
-    .catch(error => console.log(error));
+    .catch(error => error500(req, res, error));
 }
 
 //----------------------------- Office API
@@ -144,7 +147,7 @@ function officeAPI(req, res){
       questionArray.push(new Office((JSON.parse(data.text)).data));
       swansonAPI(req, res);
     })
-    .catch(error => console.log(error));
+    .catch(error => error500(req, res, error));
 }
 
 //--------------------------- Ron Swanson API
@@ -155,7 +158,7 @@ function swansonAPI(req, res){
       questionArray.push(new Swanson(data.body[0]));
       kanyeAPI(req, res);
     })
-    .catch(error => console.log(error));
+    .catch(error => error500(req, res, error));
 }
 //------------------------------- Kanye API
 function kanyeAPI(req, res){
@@ -165,7 +168,7 @@ function kanyeAPI(req, res){
       questionArray.push(new Kanye(data.body.quote));
       getNames(req, res);
     })
-    .catch(error => console.log(error));
+    .catch(error => error500(req, res, error));
 }
 
 //--------------------------------- Simpsons API (Stretch Goal)
@@ -219,46 +222,37 @@ function ScoreBoard(obj) {
 // DATABASE STUFF ----------------------------------------------------------
 
 //--------------------------------- Add Quote
-function addQuote(request, response) {
+function addQuote(req, res) {
   const SQL = 'INSERT INTO quotes (quotes, quoter, note) VALUES ($1, $2, $3) RETURNING id';
-  const params = [quiz[0].quote, quiz[0].quoter, request.body.note];
-  
-  console.log(quiz[0].quote);
-  // console.log(params);
-  
+  const params = [quiz[0].quote, quiz[0].quoter, req.body.note];
+
   client.query(SQL, params)
-  .then(results => {
+    .then(() => {
       // console.log(results.rows);
-      response.status(200); 
+      res.status(200);
     })
-    .catch(error => {
-      console.log(error);
-    });
+    .catch(error => error500(req, res, error));
 }
 
 //--------------------------------- Saved Quotes
-function savedQuote(request, response) {
+function savedQuote(req, res) {
   const SQL = 'SELECT * FROM quotes;';
 
   return client.query(SQL)
     .then(results => {
-      response.status(200).render('saved', { quizobject : results.rows });
+      res.status(200).render('saved', { quizobject : results.rows });
     })
-    .catch(error => {
-      console.log(error);
-    });
+    .catch(error => error500(req, res, error));
 }
 //--------------------------------- Add Scores
 function addScores(req, res) {
   const SQL = 'INSERT INTO users (firstName, score_number, out_of) VALUES ($1, $2, $3) RETURNING *';
   const params = [playerName, score, quiz.length];
   client.query(SQL, params)
-    .then(results => {
+    .then(() => {
       res.status(200).redirect(`/scores`);
     })
-    .catch(error => {
-      console.log(error);
-    });
+    .catch(error => error500(req, res, error));
 }
 
 //------------------------------ Get Saved Scores
@@ -269,40 +263,43 @@ function savedScores(req, res) {
       let scores = results.rows.map(score => new ScoreBoard(score));
       res.status(200).render('scores', {scores: scores});
     })
-    .catch(error => {
-      console.log(error);
-    });
+    .catch(error => error500(req, res, error));
 }
 
 //--------------------------------- Add Notes
 app.put('/saved', addQuoteNote);
-function addQuoteNote(request, response) {
+function addQuoteNote(req, res) {
   const SQL = 'UPDATE quotes SET note = $1 WHERE id=$2';
-  const params = [request.body.note, request.body.id];
+  const params = [req.body.note, req.body.id];
 
   client.query(SQL, params)
-    .then(results => {
-      response.status(200).redirect('saved');
+    .then(() => {
+      res.status(200).redirect('saved');
     })
-    .catch(error => {
-      console.log(error);
-    });
+    .catch(error => error500(req, res, error));
 }
 
 //--------------------------------- Delete Quote
 app.delete('/saved', deleteQuote);
-function deleteQuote(request, response) {
+function deleteQuote(req, res) {
   const SQL = 'DELETE from quotes WHERE id = $1';
-  const params = [request.body.id];
-  // console.log(request.body);
+  const params = [req.body.id];
   client.query(SQL, params)
-  .then(results => {
-    console.log(results.rows);
-      response.status(200).redirect('saved');
+    .then(results => {
+      console.log(results.rows);
+      res.status(200).redirect('saved');
     })
-    .catch(error => {
-      console.log(error);
-    });
+    .catch(error => error500(req, res, error));
+}
+
+// ------------------------- Errors
+function error404(req, res) {
+  console.log('Error 404');
+  res.status(404).render(`error`);
+}
+function error500(req, res, error) {
+  console.log('ERROR 500:', error);
+  res.status(500).render(`error`);
 }
 
 // turn the server on
@@ -315,25 +312,3 @@ client.connect()
   .catch (error => {
     console.log(error);
   });
-
-
-
-// {
-//   id: question number,
-//   quote: 'quote',
-//   quoter: 'quoter',
-//   optionA: name1,
-//   optionB: name2,
-//   optionC: name3,
-//   optionD: name4,
-//   image: image_path
-//   }
-
-
-
-
-
-
-
-
-
