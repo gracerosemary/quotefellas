@@ -36,8 +36,13 @@ $(() => {
 
 // loading bar controls for home page
 $(() => {
-  $('#start-quiz').click(() => {
-    $('#fader').toggle();
-    $('#loading').toggle();
+  $('#start-quiz').click(event => {
+    event.preventDefault();
+    let validator = $('input').val();
+    if(validator.length > 0){
+      $('#fader').toggle();
+      $('#loading').toggle();
+    }
   });
 });
+console.log('hello world');
