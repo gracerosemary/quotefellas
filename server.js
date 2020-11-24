@@ -92,7 +92,7 @@ function buildQuiz(req, res){
   });
   res.status(200).render('quiz', {
     quote: quiz[0],
-    player: req.body.player,
+    player: playerName,
     score: score
   });
 }
@@ -106,10 +106,9 @@ function answerCheck(req, res){
   if(questionID > 4){
     addScores(req, res);
   }else{
-    console.log(questionID)
     res.status(200).render('quiz', {
       quote: quiz[questionID],
-      player: req.body.player,
+      player: playerName,
       score: score
     });
   }
