@@ -5,7 +5,7 @@ The vision of this app is to provide users a way to remember moments from their 
 
 ## SCOPE  
 **In Scope**:  
-- This app will provide the user with a simple 10 question quiz where they are asked to correctly guess who said that quote. 
+- This app will provide the user with a simple 5 question quiz where they are asked to correctly guess who said that quote. 
 - Users will be given multiple choices for the quiz.
 - Users can save their favorite quotes, as well as remove them.
 
@@ -13,7 +13,6 @@ The vision of this app is to provide users a way to remember moments from their 
 This app will not give users the option to pick which specific films/movies they are quizzed on.
 
 ## MVP:  
-- Pick a topic / theme (ex. Tv show) with radio buttons
 - Call APIs to generate quotes 
 - Display quotes to the user in the form of a quiz
 - Have a save quote feature that saves a quote to a Saved page (DB)
