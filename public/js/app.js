@@ -3,7 +3,7 @@
 // drop down menu control
 $(() => {
   $('#dropdown').click(() => {
-    $('#menu').slideToggle(500);
+    $('#menu').fadeToggle(500);
   });
 });
 
@@ -18,18 +18,22 @@ $(() => {
     // if the answer is incorrect highlight in red
     if(answer !== correct){
       $(`input[name=answer]:checked`).parent().addClass('incorrect-answer');
-    } else {
+      let children = $('input[name=answer]');
+      //highlight the correct answer in green
+      for (let i = 0; i < 4; i++){
+        if (children[i].value === correct){
+          $(`#${children[i].id}`).parent().addClass('correct-answer');
+        }
+      }
+      $('#next-question').text('Incorrect >>');
+    }
+    else {
+      $(`input[name=answer]:checked`).parent().addClass('correct-answer');
       // update score board in real time before route call
       let score = $('#player-score').text();
       score++;
       $('#player-score').text(score);
-    }
-    //highlight the correct answer in green
-    let children = $('input[name=answer]');
-    for (let i = 0; i < 4; i++){
-      if (children[i].value === correct){
-        $(`#${children[i].id}`).parent().addClass('correct-answer');
-      }
+      $('#next-question').text('Correct >>');
     }
   });
 });
@@ -44,4 +48,11 @@ $(() => {
     }
   });
 });
-console.log('hello world');
+
+// saved quote text change
+$(() => {
+  $('#save').click(() => {
+    $('#save').fadeToggle(1000); // remove save button
+    $('#saved').fadeToggle(1000); //show saved
+  });
+});

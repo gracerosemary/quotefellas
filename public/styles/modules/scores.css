@@ -22,3 +22,15 @@ td, th {
 h2 {
   color: white;
 }
+
+button {
+  width: 200px;
+  height: 60px;
+  margin: 20px auto;
+  background: black;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 20px;
+  display: block;
+}

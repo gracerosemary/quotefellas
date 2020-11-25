@@ -4,8 +4,8 @@
 }
 
 body {
-  background: rgb(49, 49, 49);
-  font-family: 'Merriweather', serif;
+  background: rgb(20, 20, 20);
+  font-family: 'Quattrocento', serif;
   min-width: 360px;
 }
 
@@ -23,4 +23,5 @@ h1 {
   letter-spacing: .1px;
   line-height: 40px;
 }
+
 

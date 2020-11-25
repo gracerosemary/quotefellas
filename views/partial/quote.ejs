@@ -1,26 +1,21 @@
 <% quizobject.forEach(quote => { %>    
-  <div class="saved">
-    <form action="saved?_method=PUT" method="POST">
-      <section id="saved-quotes">     
-          <!-- insert data from object -->
-          <p><%= quote.quotes %></p>
-          <p>- <%=quote.quoter%></p>
-          <!-- <figure><img src="https://place-hold.it/175x250" alt="optional image"></figure> -->
-        
-          <p class="quote">Notes:</p>
-          <input class="note" type="text" name="note" placeholder="Enter your notes here..." value="<%= quote.note %>"/>
-          <input type="hidden" name="id" value="<%=quote.id %>"/>
-          <button type="submit">Save Note</button>
-        </section>
-        </form>
-      
-      <form action="saved?_method=DELETE" method="POST">
-        <input class="hide" type="text" name="quote" value="<%= quote.quotes %>"/>
-        <input class="hide" type="text" name="quotor" value="<%=quote.quoter%>"/>
-        <input class="hide" type="text" name="note" value="<%= quote.note %>"/>
-        <input class="hide" type="text" name="id" value="<%=quote.id %>"/>
-        <button type="submit" id="delete">Delete Quote</button>
-      </form>
-  </div>
-<% }) %>
+  <form action="saved?_method=PUT" method="POST">
+    <section id="saved-quotes">
+      <!-- insert data from object -->
+      <p><%= quote.quotes %></p>
+      <p>- <%=quote.quoter%></p>
+    
+      <p class="quote">Notes:</p>
+      <input class="note" type="text" name="note" placeholder="Enter your notes here..." value="<%= quote.note %>"/>
+      <input type="hidden" name="id" value="<%=quote.id %>"/>
+      <button type="submit" id="save-notes">Save Note</button>
+    </section>
+    </form>
+    
+    <form action="saved?_method=DELETE" method="POST">
+      <input class="hide" type="text" name="id" value="<%=quote.id %>"/>
+      <button type="submit">Delete Quote</button>
+    </form>
+    <hr>
 
+<% }) %>
