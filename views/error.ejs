@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include( './layout/head.ejs' ) %>
+  <link rel="stylesheet" href="./styles/modules/homepage.css">
+</head>
+
+<body>
+  <div id="grid-container">
+    <header>
+      <%- include( './layout/header.ejs' ) %>
+    </header>
+    <main id="errors">
+      <p>Something went wrong</p>
+      <img src="<%= image %>" alt="">
+    </main>
+    <footer>
+      <%- include( './layout/footer.ejs' ) %>
+    </footer>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include( './layout/head.ejs' ) %>
+  <link rel="stylesheet" href="./styles/modules/scores.css">
+</head>
+<body>
+  <div id="grid-container">
+  <header>
+    <%- include( './layout/header.ejs' ) %>
+  </header>
+  <main>
+    <h2>Scores</h2>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Score</th>
+        <th>out of</th>
+      </tr>
+      <!-- for loop here to iterate saved score partials -->
+      <%- include('./partial/score.ejs') %>
+    </table>
+    <a href="/"><button>Home Page</button></a>
+  </main>
+
+  <footer>
+    <%- include( './layout/footer.ejs' ) %>
+  </footer>
+  </div>
+</body>
+</html>

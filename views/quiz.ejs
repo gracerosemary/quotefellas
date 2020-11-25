@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include( './layout/head.ejs' ) %>
+  <link rel="stylesheet" href="/styles/modules/questions.css">
+</head>
+
+<body>
+  <div id="grid-container">
+    <header>
+      <%- include( './layout/header.ejs' ) %>
+    </header>
+    <main>
+      <div class="scoreheader">
+        <h2><%= player %>:</h2>
+        <p id="player-score"><%= score %></p>
+      </div>
+      <%- include('./partial/question.ejs') %>
+    </main>
+
+    <footer>
+      <%- include( './layout/footer.ejs' ) %>
+    </footer>
+  </div>
+</body>
+</html>

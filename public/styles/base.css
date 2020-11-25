@@ -1,0 +1,27 @@
+* {
+  box-sizing: border-box;
+  text-align: center;
+}
+
+body {
+  background: rgb(20, 20, 20);
+  font-family: 'Quattrocento', serif;
+  min-width: 360px;
+}
+
+.hidden-input {
+  display: none;
+}
+
+a:link, a:visited, a:hover, a:active {
+  color: #fff;
+  text-decoration: none;
+}
+
+h1 {
+  font-stretch: ultra-condensed;
+  letter-spacing: .1px;
+  line-height: 40px;
+}
+
+

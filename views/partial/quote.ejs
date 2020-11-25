@@ -1,0 +1,21 @@
+<% quizobject.forEach(quote => { %>    
+  <form action="saved?_method=PUT" method="POST">
+    <section id="saved-quotes">
+      <!-- insert data from object -->
+      <p><%= quote.quotes %></p>
+      <p>- <%=quote.quoter%></p>
+    
+      <p class="quote">Notes:</p>
+      <input class="note" type="text" name="note" placeholder="Enter your notes here..." value="<%= quote.note %>"/>
+      <input type="hidden" name="id" value="<%=quote.id %>"/>
+      <button type="submit" id="save-notes">Save Note</button>
+    </section>
+    </form>
+    
+    <form action="saved?_method=DELETE" method="POST">
+      <input class="hide" type="text" name="id" value="<%=quote.id %>"/>
+      <button type="submit">Delete Quote</button>
+    </form>
+    <hr>
+
+<% }) %>
